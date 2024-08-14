@@ -18,15 +18,29 @@ export function AuthProvider({children}) {
     const singIn = async ({email, password}) => {
 
         if (email === "super@email.com" && password === "Super123!") {
-            setUser ({id: 1, name: "Super", email, role: "SUPER" })
-        }
-
-        if (email === "adm@email.com" && password === "Adm123!") {
-            setUser ({id: 2, name: "Adm", email, role: "ADM" })
-        }
-
-        if (email === "user@email.com" && password === "User123!") {
-            setUser ({id: 3, name: "User", email, role: "USER" })
+            setUser ({
+                autenticated: true,
+                user: {id: 1, name: "Super Usuário", email},
+                role: Role.SUPER,
+            });
+        } else if (email === "adm@email.com" && password === "Adm123!") {
+            setUser ({
+                autenticated: true,
+                user: {id: 2, name: "Administrador", email},
+                role: Role.ADM,
+            });        
+        } else if (email === "user@email.com" && password === "User123!") {
+            setUser ({
+                autenticated: true,
+                user: {id: 3, name: "Usuário Comum", email},
+                role: Role.USER,
+            });        
+        } else {
+            setUser ({
+                autenticated: false,
+                user: null,
+                role: null,
+            });
         }
     };
 
