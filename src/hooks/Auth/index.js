@@ -1,68 +1,60 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useUserDatabase } from "../../database/useUserDatabase";
 
 const AuthContext = createContext({});
 
 export const Role = {
-    SUPER: "SUPER",
-    ADM: "ADM",
-    USER: "USER"
-}
+  SUPER: "SUPER",
+  ADM: "ADM",
+  USER: "USER",
+};
 
-export function AuthProvider({children}) {
-    const [user, setUser] = useState ({
-        autenticated: null,
+export function AuthProvider({ children }) {
+  const { authUser } = useUserDatabase();
+
+  const [user, setUser] = useState({
+    autenticated: null,
+    user: null,
+    role: null,
+  });
+
+  const singIn = async ({ email, password }) => {
+    const response = await authUser({ email, password });
+
+    if (!response) {
+      setUser({
+        autenticated: false,
         user: null,
         role: null,
+      });
+    }
+
+    setUser({
+      autenticated: true,
+      user: { id: 1, name: "Super Usuário", email },
+      role: Role.SUPER,
     });
+  };
 
-    const singIn = async ({email, password}) => {
+  const singOut = async () => {
+    setUser({});
+  };
 
-        if (email === "super@email.com" && password === "Super123!") {
-            setUser ({
-                autenticated: true,
-                user: {id: 1, name: "Super Usuário", email},
-                role: Role.SUPER,
-            });
-        } else if (email === "adm@email.com" && password === "Adm123!") {
-            setUser ({
-                autenticated: true,
-                user: {id: 2, name: "Administrador", email},
-                role: Role.ADM,
-            });        
-        } else if (email === "user@email.com" && password === "User123!") {
-            setUser ({
-                autenticated: true,
-                user: {id: 3, name: "Usuário Comum", email},
-                role: Role.USER,
-            });        
-        } else {
-            setUser ({
-                autenticated: false,
-                user: null,
-                role: null,
-            });
-        }
-    };
+  useEffect(() => {
+    console.log("AuthProvider: ", user);
+  }, [user]);
 
-    const singOut = async () => {
-        setUser({});
-    };
-
-    useEffect (() => {
-        console.log("AuthProvider: ", user);
-    }, [user]);
-
-    return (
+  return (
     <AuthContext.Provider value={{ user, singIn, singOut }}>
-        {children}
+      {children}
     </AuthContext.Provider>
-    );
+  );
 }
 
 export function useAuth() {
-    const context = useContext(AuthContext);
-    if (!context) {
-      throw new Error("useAuth must be within an AuthProvider");
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be within an AuthProvider");
+  }
+  return context;
 }

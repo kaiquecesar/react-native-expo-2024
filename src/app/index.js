@@ -12,7 +12,7 @@ export default function App() {
       <Button 
         title='SingIng Super' 
         onPress={() => 
-          singIn({email: "super@email.com", password: "Super123!"})} />
+          singIn({email: "super@email.com", password: "A123456a!"})} />
       <Button 
         title='SingIng Adm' 
         onPress={() => 
