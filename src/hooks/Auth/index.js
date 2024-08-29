@@ -10,16 +10,18 @@ export const Role = {
 };
 
 export function AuthProvider({ children }) {
-  const { authUser } = useUserDatabase();
-
-  const [user, setUser] = useState({
+   const [user, setUser] = useState({
     autenticated: null,
     user: null,
     role: null,
   });
 
+  const { authUser } = useUserDatabase();
+
   const singIn = async ({ email, password }) => {
     const response = await authUser({ email, password });
+    console.log(!response)
+    
 
     if (!response) {
       setUser({
@@ -27,12 +29,15 @@ export function AuthProvider({ children }) {
         user: null,
         role: null,
       });
+      throw new Error ("Usuário ou senha inválidos");
     }
+
+    console.log(!response);
 
     setUser({
       autenticated: true,
-      user: { id: 1, name: "Super Usuário", email },
-      role: Role.SUPER,
+      user: response,
+      role: response.role,
     });
   };
 

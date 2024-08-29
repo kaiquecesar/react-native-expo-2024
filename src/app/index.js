@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { BackHandler, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, BackHandler, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from "../hooks/Auth"; 
 import { router } from 'expo-router';
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +13,16 @@ export default function App() {
 
   const tooglePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
+  };
+
+  const handleEntrarSuper = async () => {
+    try {
+      await singIn({ email, password });
+      router.replace("/");
+    } catch (error) {
+      Alert.alert("Erro", error.message)
+      console.log(error);
+    }
   }
   
 
@@ -41,11 +51,13 @@ export default function App() {
       </View>
 
       <Button title='Entrar' 
-        onPress={() => singIn({email: "super@email.com", 
-        password: "A123456a!"})} 
+        onPress={handleEntrarSuper} 
         style={styles.button}/>
+
       <Button title='Sobre' onPress={() => router.push("/about")} />
-        <Button title='Sair do Aplicativo' onPress={() => BackHandler.exitApp()} />
+        
+      <Button title='Sair do Aplicativo' onPress={() => BackHandler.exitApp()} />
+
       <StatusBar style="auto" />
     </View>
   );
