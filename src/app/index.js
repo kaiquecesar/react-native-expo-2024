@@ -18,7 +18,7 @@ export default function App() {
   const handleEntrarSuper = async () => {
     try {
       await singIn({ email, password });
-      router.replace("/");
+      // router.replace("/");
     } catch (error) {
       Alert.alert("Erro", error.message)
       console.log(error);
