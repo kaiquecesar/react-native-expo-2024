@@ -1,13 +1,14 @@
+import { Text, View } from "react-native";
 import { AuthProvider } from "./Auth";
 import { DataProvider } from "./Data";
 import { FontProvider } from "./font";
 
-export function AppProvider({children}) {
-    return ( 
+export function AppProvider({ children }) {
+  return (
     <FontProvider>
-        <DataProvider>
-            <AuthProvider>{children}</AuthProvider>
-        </DataProvider>
+      <DataProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </DataProvider>
     </FontProvider>
-    );
+  );
 }

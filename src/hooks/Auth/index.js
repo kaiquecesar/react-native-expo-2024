@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useUserDatabase } from "../../database/useUserDatabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, Text, View } from "react-native";
 
 const AuthContext = createContext({});
 
@@ -11,7 +12,7 @@ export const Role = {
 };
 
 export function AuthProvider({ children }) {
-   const [user, setUser] = useState({
+  const [user, setUser] = useState({
     autenticated: null,
     user: null,
     role: null,
@@ -39,24 +40,17 @@ export function AuthProvider({ children }) {
     };
 
     loadStoragedData();
-  },[]);
-
-  useEffect(() => {
-    console.log("AuthProvider: ", user);
-  },[user]);
+  }, []);
 
   const singIn = async ({ email, password }) => {
     const response = await authUser({ email, password });
-    console.log(!response)
-    
-
     if (!response) {
       setUser({
         autenticated: false,
         user: null,
         role: null,
       });
-      throw new Error ("Usuário ou senha inválidos");
+      throw new Error("Usuário ou senha inválidos");
     }
 
     await AsyncStorage.setItem("@payment:user", JSON.stringify(response));
@@ -69,13 +63,9 @@ export function AuthProvider({ children }) {
   };
 
   const singOut = async () => {
-    await AsyncStorage.deleteItem("@payment:user");
-    setUser({});
+    await AsyncStorage.removeItem("@payment:user");
+    setUser({ autenticated: false, user: null, role: null });
   };
-
-  useEffect(() => {
-    console.log("AuthProvider: ", user);
-  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, singIn, singOut }}>
