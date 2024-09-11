@@ -1,16 +1,24 @@
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useAuth } from '../../hooks/Auth/index';
 
 
 function CustomDrawerContent(props) {
-  const { singOut } = useAuth();
+  const { user, singOut } = useAuth();
 
   return (
     <View style={{ flex: 1 }}>
+      <View style={{ marginTop: 30, justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0", paddingVertical: 10}}>
+        <Image 
+        source={{ uri:"https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" }}
+        style={{ width: 100, height: 100, borderRadius: 50, margin: 10 }}/>
+        <Text style={{ fontSize: 20, textAlign: "center", fontFamily: "regular"}}>
+          {user?.user?.name}       
+        </Text>
+      </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -25,7 +33,6 @@ function CustomDrawerContent(props) {
         }}>
         <Text style={{ color: "white", fontFamily: "bold"}}>Deslogar</Text>
       </TouchableOpacity>
-     <Button title="Sair" style={{ height: 100 }}/>
     </View>
     
   );
