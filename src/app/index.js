@@ -8,7 +8,7 @@ import { useState } from 'react';
 export default function App() {
   const { singIn, singOut } = useAuth();
   const [email, setEmail] = useState("super@gmail.com");
-  const [password, setPassword] = useState("A123456a!");
+  const [password, setPassword] = useState("super!");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const tooglePasswordVisibility = () => {
@@ -28,19 +28,19 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Minha primeira janela</Text>
+      <Text style={styles.title}>FAÇA SEU LOGIN</Text>
       <View style={styles.inputbox}>
         <Ionicons name="mail-open-outline" size={50} color="black"/>
-        <TextInput style={styles.emailinput} 
-        placeholder="E-mail" 
+        <TextInput style={styles.emailinput}
         value={email} 
+        placeholder="E-mail" 
         onChangeText={setEmail}/>
       </View>
 
       <View style={styles.inputbox}>
         <Ionicons name="lock-closed-outline" size={50} color="black"/>
         <TextInput style={styles.emailinput} 
-        placeholder="E-mail" 
+        placeholder="Senha"
         value={password} 
         onChangeText={setPassword}
         secureTextEntry={passwordVisibility}/>
@@ -54,9 +54,7 @@ export default function App() {
         onPress={handleEntrarSuper} 
         style={styles.button}/>
 
-      <Button title='Sobre' onPress={() => router.push("/about")} />
-        
-      <Button title='Sair do Aplicativo' onPress={() => BackHandler.exitApp()} />
+      <Button title='Sobre' onPress={() => router.push("/about")}/>
 
       <StatusBar style="auto" />
     </View>
@@ -66,14 +64,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 15,
   },
   title: {
-    fontFamily: "regular",
-    fontSize: 20,
+    fontFamily: "bold",
+    fontSize: 25,
   },
   inputbox: {
     flexDirection: "row",
@@ -81,6 +79,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     marginVertical: 10, 
     alignItems: "center",
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+    padding: 8,
   },
   emailinput: {
     flex: 1,
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
      fontSize: 20,
   },
   button: {
-    width: "100%"  
+    width: "100%", 
+    backgroundColor: "blue",
   },
 });

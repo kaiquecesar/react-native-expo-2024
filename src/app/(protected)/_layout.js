@@ -62,15 +62,7 @@ const DrawerLayout = () => {
           drawerIcon: () => (
             <Ionicons name="code-download-sharp" size={20} color="black" />
           ),
-        }} />
-        <Drawer.Screen name="about" options={{
-          drawerLabel: "Sobre",
-          headerTitle: "Sobre",
-          drawerIcon: () => (
-            <Ionicons name="information-circle-outline" size={20} color="black" />
-          ),
-        }} />
-  
+        }} />     
       </Drawer>
     </GestureHandlerRootView>
   );
