@@ -11,103 +11,57 @@ export default function Payment() {
     {
       id: 1,
       nome: "Humphrey Aggio",
-
+    },
+    {
       id: 2,
       nome: "Trumaine Belshaw",
-
+    },
+    {
       id: 3,
       nome: "Ardys Mor",
-
+    },
+    {
       id: 4,
       nome: "Chickie Rowell",
-
+    },
+    {
       id: 5,
       nome: "Bale Keune",
-
+    },
+    {
       id: 6,
       nome: "Remy Pullin",
-
+    },
+    {
       id: 7,
       nome: "Alice Chatters",
-
+    },
+    {
       id: 8,
       nome: "Nita Sapwell",
-
+    },
+    {
       id: 9,
       nome: "Palmer Chinnock",
-
+    },
+    {
       id: 10,
       nome: "Darrelle Wharrier",
-
-      id: 11,
-      nome: "Rollin Cushelly",
-
-      id: 12,
-      nome: "Jandy Nelm",
-
-      id: 13,
-      nome: "Haywood Lamar",
-
-      id: 14,
-      nome: "Daron Shadfourth",
-
-      id: 15,
-      nome: "Janith Denes",
-
-      id: 16,
-      nome: "Guenevere Aldhous",
-
-      id: 17,
-      nome: "Martyn Burdekin",
-
-      id: 18,
-      nome: "Patric Grzeszczak",
-
-      id: 19,
-      nome: "Grange Watting",
-
-      id: 20,
-      nome: "Zora Cazin",
-
-      id: 21,
-      nome: "Rinaldo Antoniazzi",
-
-      id: 22,
-      nome: "Teddie Orthmann",
-
-      id: 23,
-      nome: "Fan Rymell",
-
-      id: 24,
-      nome: "Levi Salmen",
-
-      id: 25,
-      nome: "Hastings Sigars",
-
-      id: 26,
-      nome: "Saul Bartleet",
-
-      id: 27,
-      nome: "Carley Honeyghan",
-
-      id: 28,
-      nome: "Alfred Stanfield",
-
-      id: 29,
-      nome: "Natalina Tysack",
     },
   ]);
   const [id, setId] = useState(1);
   const [data, setData] = useState(new Date());
   const [viewCalendar, setViewCalendar] = useState(false);
-  
+  const [observacao, setObservacao] = useState("");
+
   const handleCalendar = (event, selectedDate) => {
-    setData(selectedDate);
     setViewCalendar(false);
-  }
+    setData(selectedDate);
+  };
 
   return (
     <View style={styles.content}>
+      <Text style={styles.title}>Inserir Pagamentos</Text>
       <View style={styles.inputView}>
         <Ionicons name="wallet-outline" size={24} color="black" />
         <TextInput
@@ -134,18 +88,26 @@ export default function Payment() {
         </Picker>
       </View>
       <View style={styles.inputView}>
-        <Text onPress={() => setViewCalendar(true)}>
+        <Text onPress={() => setViewCalendar(true)} style={styles.inputData}>
           {data.toLocaleDateString().split("T")[0]}
         </Text>
         {viewCalendar && (
           <DateTimePicker
             value={data}
             onChange={handleCalendar}
+            mode="date"
+            testID="dateTimePicker"
           />
         )}
       </View>
       <View style={styles.inputView}>
-        <TextInput placeholder="Observações" />
+        <TextInput
+          placeholder="Observações"
+          style={styles.inputObservacao}
+          value={observacao}
+          onChangeText={setObservacao}
+          multiline={true}
+        />
       </View>
       <View style={styles.contentButtons}>
         <Button title="Salvar" />
@@ -166,11 +128,14 @@ const styles = StyleSheet.create({
 
   inputView: {
     borderColor: "black",
-    borderWidth: 1,
+    borderWidth: 2,
     width: "100%",
     margin: 10,
     alignItems: "center",
     flexDirection: "row",
+    padding: 10,
+    borderRadius: 10,
+    margin: 5,
   },
 
   contentButtons: {
@@ -185,5 +150,22 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "right",
     padding: 10,
+  },
+  inputData: {
+    width: "100%",
+    textAlign: "center",
+    fontFamily: "regular",
+    fontSize: 20,
+    padding: 10,
+    color: "#999",
+  },
+  inputObservacao: {
+    width: "100%",
+    textAlign: "center",
+    fontFamily: "regular",
+    fontSize: 20,
+    padding: 10,
+    color: "#999",
+    lineHeight: 20,
   },
 });
