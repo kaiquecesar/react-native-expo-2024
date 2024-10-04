@@ -115,10 +115,9 @@ export default function Payment() {
   };
 
   const handleSubmit = async () => {
-    console.log(user.user);
     const payment = {
       user_id: id,
-      user_cadastro: Number(user.id),
+      user_cadastro: Number(user.user.id),
       valor_pago: convertValue(valor),
       data_pagamento: data,
       observacao,
