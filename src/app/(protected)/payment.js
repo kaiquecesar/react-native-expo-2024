@@ -14,6 +14,7 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { z } from "zod";
 import { useAuth } from "../../hooks/Auth/index";
+import { useUserDatabase } from "../../database/useUserDatabase";
 
 const paymentSchema = z.object({
   valor_pago: z.number().gt(0),
@@ -73,6 +74,7 @@ export default function Payment() {
   const [observacao, setObservacao] = useState("");
   const valueRef = useRef();
   const {user} = useAuth();
+  const {createUser} = useUserDatabase();
 
   const handleCalendar = (event, selectedDate) => {
     setViewCalendar(false);
@@ -112,7 +114,7 @@ export default function Payment() {
     } catch (error) {
       return valorConvertido
     }
-  };
+  }; 
 
   const handleSubmit = async () => {
     const payment = {
@@ -125,7 +127,9 @@ export default function Payment() {
 
     try {
       const result = await paymentSchema.parseAsync(payment);
+      const { insertedID } = await createUser(payment);
       console.log(result);
+      console.log(insertedID);
     } catch (error) {
       console.log(error);
     }

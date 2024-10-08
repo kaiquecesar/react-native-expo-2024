@@ -24,7 +24,7 @@ export function useUserDatabase() {
   //data_pagamento DATE NOT NULL,
   //observacao TEXT,
 
-  async function create(
+  async function createUser(
     user_id,
     user_cadastro,
     valor_pago,
@@ -47,11 +47,13 @@ export function useUserDatabase() {
       const insertedID = result.lastInsertRowId.toString();
       return { insertedID };
     } catch (error) {
+      throw error
     } finally {
+      await statement.finalizeAsync();
     }
   }
 
   return {
-    authUser,
+    authUser, createUser
   };
 }
