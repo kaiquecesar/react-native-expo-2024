@@ -1,3 +1,4 @@
+//pagina de login
 import { StatusBar } from 'expo-status-bar';
 import { Alert, BackHandler, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from "../hooks/Auth"; 

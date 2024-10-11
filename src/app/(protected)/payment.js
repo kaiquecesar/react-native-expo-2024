@@ -14,7 +14,9 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { z } from "zod";
 import { useAuth } from "../../hooks/Auth/index";
+import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { useUserDatabase } from "../../database/useUserDatabase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const paymentSchema = z.object({
   valor_pago: z.number().gt(0),
@@ -26,63 +28,31 @@ const paymentSchema = z.object({
 
 export default function Payment() {
   const [valor, setValor] = useState("0,00");
-  const [sugestoes, setSugestoes] = useState([
-    {
-      id: 1,
-      nome: "Humphrey Aggio",
-    },
-    {
-      id: 2,
-      nome: "Trumaine Belshaw",
-    },
-    {
-      id: 3,
-      nome: "Ardys Mor",
-    },
-    {
-      id: 4,
-      nome: "Chickie Rowell",
-    },
-    {
-      id: 5,
-      nome: "Bale Keune",
-    },
-    {
-      id: 6,
-      nome: "Remy Pullin",
-    },
-    {
-      id: 7,
-      nome: "Alice Chatters",
-    },
-    {
-      id: 8,
-      nome: "Nita Sapwell",
-    },
-    {
-      id: 9,
-      nome: "Palmer Chinnock",
-    },
-    {
-      id: 10,
-      nome: "Darrelle Wharrier",
-    },
-  ]);
+  const [sugestoes, setSugestoes] = useState([]);
   const [id, setId] = useState(1);
   const [data, setData] = useState(new Date());
   const [viewCalendar, setViewCalendar] = useState(false);
   const [observacao, setObservacao] = useState("");
   const valueRef = useRef();
-  const {user} = useAuth();
-  const {createUser} = useUserDatabase();
-
+  const { user } = useAuth();
+  const { createPayment } = usePaymentsDatabase();
+  const { getAllUsers } = useUserDatabase();
   const handleCalendar = (event, selectedDate) => {
     setViewCalendar(false);
     setData(selectedDate);
   };
 
   useEffect(() => {
-    valueRef?.current?.focus();
+    (async () => {
+      valueRef?.current?.focus();
+      try {
+        const users = await getAllUsers();
+        setSugestoes(users);
+        setId(users[0].id);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, []);
 
   const handleChangeValor = (value) => {
@@ -110,16 +80,16 @@ export default function Payment() {
       if (valorConvertido === 0 || isNaN(valorConvertido)) {
         return 0;
       }
-      return valorConvertido
+      return valorConvertido;
     } catch (error) {
-      return valorConvertido
+      return valorConvertido;
     }
-  }; 
+  };
 
   const handleSubmit = async () => {
     const payment = {
       user_id: id,
-      user_cadastro: Number(user.user.id),
+      user_cadastro: user?.user?.id || 0,
       valor_pago: convertValue(valor),
       data_pagamento: data,
       observacao,
@@ -127,9 +97,13 @@ export default function Payment() {
 
     try {
       const result = await paymentSchema.parseAsync(payment);
-      const { insertedID } = await createUser(payment);
-      console.log(result);
+      const { insertedID } = await createPayment(payment);
       console.log(insertedID);
+      setValor("0,00");
+      setId(sugestoes[0].id);
+      setData(new Date());
+      setObservacao("");
+      valueRef?.current?.focus();
     } catch (error) {
       console.log(error);
     }

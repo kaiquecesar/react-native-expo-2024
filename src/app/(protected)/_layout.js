@@ -1,4 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
+//aba de menus
+import { Feather, FontAwesome, FontAwesome5, FontAwesome6, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
@@ -10,7 +11,7 @@ function CustomDrawerContent(props) {
   const { user, singOut } = useAuth();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1}}>
       <View style={{ marginTop: 30, justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0", paddingVertical: 10}}>
         <Image 
         source={{ uri:"https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" }}
@@ -60,9 +61,20 @@ const DrawerLayout = () => {
           drawerLabel: "Pagamentos",
           headerTitle: "Pagamentos",
           drawerIcon: () => (
-            <Ionicons name="code-download-sharp" size={20} color="black" />
+            <Ionicons name="cash-outline" size={20} color="black" />
           ),
-        }} />     
+        }} /> 
+        <Drawer.Screen name="skincare" options={{
+          drawerLabel: "SkinCare",
+          headerTitle: "SkinCare",
+          drawerIcon: () => (
+            <MaterialIcons name="spa" size={20} color="black" />,
+            <Ionicons name="ios-flower" size={20} color="black" />,
+            <FontAwesome name="smile" size={20} color="black" />,
+            <Ionicons name="ios-body" size={20} color="black" />,
+            <FontAwesome5 name="hand-sparkles" size={20} color="black" />          
+          ),
+        }} />    
       </Drawer>
     </GestureHandlerRootView>
   );
