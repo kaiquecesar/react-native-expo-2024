@@ -46,7 +46,7 @@ export default function App() {
         <View style={styles.backbox}>
           <Text style={styles.title}>FAÇA SEU LOGIN</Text>
           <View style={styles.inputbox}>
-            <Ionicons name="mail-open-outline" size={40} color="black" />
+            <Ionicons name="mail-open-outline" size={36} color="black" />
             <TextInput
               style={styles.emailinput}
               value={email}
@@ -56,7 +56,7 @@ export default function App() {
           </View>
 
           <View style={styles.inputbox}>
-            <Ionicons name="lock-closed-outline" size={40} color="black" />
+            <Ionicons name="lock-closed-outline" size={36} color="black" />
             <TextInput
               style={styles.emailinput}
               placeholder="Senha"

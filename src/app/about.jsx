@@ -20,7 +20,7 @@ export default function About() {
                 Acreditamos que o autocuidado não é apenas sobre aparência, mas também sobre se sentir bem por dentro e por fora.
                 Explore, descubra e cuide de você com o nosso apoio.
             </Text>
-            <Button title="Menu Inicial" onPress={() => {router.replace("/")}}/>
+            <Button title="Voltar" onPress={() => {router.push("signIn")}}/>
         </View>
     )
 }
