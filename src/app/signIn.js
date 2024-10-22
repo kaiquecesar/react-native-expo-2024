@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <ImageBackground
-      source={require("../assets/signin3.png")}
+      source={require("../assets/img/signin3.png")}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
