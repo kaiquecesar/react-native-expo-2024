@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, Touchable, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Skincare() {
   const [expanded, setExpanded] = useState({
@@ -26,6 +27,10 @@ export default function Skincare() {
         style={styles.headerImg}
         source={require("../../assets/img/headerskincare.png")}
       />
+      <Image
+        style={styles.titleImg}
+        source={require("../../assets/img/titleskincare.png")}
+      />
       <View
         style={{
           flex: 1,
@@ -34,8 +39,6 @@ export default function Skincare() {
           padding: 20,
         }}
       >
-        <Text style={styles.title}>DESCUBRA O CUIDADO IDEAL PARA SUA PELE</Text>
-
         <Text style={styles.text}>
           Bem-vindo(a) à nossa seção de skincare, onde o cuidado começa com o
           conhecimento! Cada pele é única, e entender o seu tipo é o primeiro
@@ -52,6 +55,13 @@ export default function Skincare() {
         </Text>
 
         <Text style={styles.title}>TIPOS DE PELE</Text>
+
+        <ToucheableOpacity style={styles.caixa} onPress={() => toggleExpand("normal")}>
+          <View style={styles.row}>
+            <Text style={styles.caixaTitle}>PELE NORMAL</Text>
+            <Ionicons name={expanded.normal ? "chevron-up" : "chevron-down"} size={24} color="black" />
+          </View>
+        </ToucheableOpacity>
 
         <View style={styles.caixa}>
           <Text>PELE NORMAL</Text>
@@ -173,5 +183,24 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     elevation: 8,
+  },
+  titleImg: {
+    width: 360,
+    height: 380,
+    resizeMode: "contain",
+    marginVertical: -170,
+    alignSelf: "center",
+    marginTop: -199,
+    marginRight: 0,
+  },
+  row: {
+    flexDirection: "row",
+    justyfyContent: "space-between",
+    alingItems: "center",
+  },
+  caixaTitle: {
+    fontSize: 20,
+    color: "#000",
+    fontFamily: "bold",
   },
 });
