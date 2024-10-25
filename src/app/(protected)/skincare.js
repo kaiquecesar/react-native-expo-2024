@@ -1,7 +1,13 @@
-import React, {useState} from "react";
-import { Image, ScrollView, StyleSheet, Text, Touchable, View } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useState } from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Skincare() {
   const [expanded, setExpanded] = useState({
@@ -9,13 +15,13 @@ export default function Skincare() {
     seca: false,
     oleosa: false,
     mista: false,
-    sensivel: false,
+    sensivel: false
   });
 
   const toggleExpand = (key) => {
     setExpanded((prevState) => ({
       ...prevState,
-      [key]: !prevState[key],
+      [key]: !prevState[key]
     }));
   };
 
@@ -36,7 +42,7 @@ export default function Skincare() {
           flex: 1,
           justifyContent: "center",
           textAling: "center",
-          padding: 20,
+          padding: 20
         }}
       >
         <Text style={styles.text}>
@@ -56,12 +62,33 @@ export default function Skincare() {
 
         <Text style={styles.title}>TIPOS DE PELE</Text>
 
-        <ToucheableOpacity style={styles.caixa} onPress={() => toggleExpand("normal")}>
+        <TouchableOpacity
+          style={styles.caixa}
+          onPress={() => toggleExpand("normal")}
+        >
           <View style={styles.row}>
             <Text style={styles.caixaTitle}>PELE NORMAL</Text>
-            <Ionicons name={expanded.normal ? "chevron-up" : "chevron-down"} size={24} color="black" />
+            <Ionicons
+              name={expanded.normal ? "chevron-up" : "chevron-down"}
+              size={24}
+              color="black"
+            />
           </View>
-        </ToucheableOpacity>
+          {expanded.normal && (
+            <View>
+              <Image
+                source={require("../../assets/img/headerskincare.png")}
+                style={styles.image}
+              />
+              <Text style={styles.text}>
+                Se a sua pele frequentemente parece repuxada, descama ou fica
+                áspera, é provável que você tenha pele seca. Ela precisa de
+                hidratação constante e cuidados mais nutritivos para repor a
+                barreira protetora
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
 
         <View style={styles.caixa}>
           <Text>PELE NORMAL</Text>
@@ -140,10 +167,10 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 4
     },
     shadowOpacity: 0.3,
-    elevation: 8,
+    elevation: 8
   },
 
   title: {
@@ -151,7 +178,7 @@ const styles = StyleSheet.create({
     color: "#1e5796",
     fontFamily: "bold",
     textShadowColor: "#000",
-    textAlign: "center",
+    textAlign: "center"
   },
 
   text: {
@@ -161,14 +188,14 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     textShadowColor: "#000",
     textAlign: "justify",
-    marginVertical: 20,
+    marginVertical: 20
   },
 
   image: {
     width: 300,
     height: 200,
     resizeMode: "contain",
-    marginVertical: 20,
+    marginVertical: 20
   },
 
   caixa: {
@@ -179,10 +206,10 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 4
     },
     shadowOpacity: 0.3,
-    elevation: 8,
+    elevation: 8
   },
   titleImg: {
     width: 360,
@@ -191,16 +218,16 @@ const styles = StyleSheet.create({
     marginVertical: -170,
     alignSelf: "center",
     marginTop: -199,
-    marginRight: 0,
+    marginRight: 0
   },
   row: {
     flexDirection: "row",
     justyfyContent: "space-between",
-    alingItems: "center",
+    alingItems: "center"
   },
   caixaTitle: {
     fontSize: 20,
     color: "#000",
-    fontFamily: "bold",
-  },
+    fontFamily: "bold"
+  }
 });
