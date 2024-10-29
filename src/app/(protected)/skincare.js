@@ -35,7 +35,7 @@ export default function Skincare() {
       />
       <Image
         style={styles.titleImg}
-        source={require("../../assets/img/titleskincare.png")}
+        source={require("../../assets/img/tituloo.png")}
       />
       <View
         style={{
@@ -61,85 +61,128 @@ export default function Skincare() {
         </Text>
 
         <Text style={styles.title}>TIPOS DE PELE</Text>
-
-        <TouchableOpacity
-          style={styles.caixa}
-          onPress={() => toggleExpand("normal")}
-        >
-          <View style={styles.row}>
-            <Text style={styles.caixaTitle}>PELE NORMAL</Text>
-            <Ionicons
-              name={expanded.normal ? "chevron-up" : "chevron-down"}
-              size={24}
-              color="black"
-            />
-          </View>
-          {expanded.normal && (
-            <View>
-              <Image
-                source={require("../../assets/img/headerskincare.png")}
-                style={styles.image}
+        <View>
+          <TouchableOpacity
+            style={styles.caixa}
+            onPress={() => toggleExpand("normal")}
+          >
+            <View style={styles.row}>
+              <Text style={styles.caixaTitle}>PELE NORMAL</Text>
+              <Ionicons
+                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                size={24}
+                color="black"
               />
-              <Text style={styles.text}>
-                Se a sua pele frequentemente parece repuxada, descama ou fica
-                áspera, é provável que você tenha pele seca. Ela precisa de
-                hidratação constante e cuidados mais nutritivos para repor a
-                barreira protetora
-              </Text>
             </View>
-          )}
-        </TouchableOpacity>
+            <Image
+              source={require("../../assets/img/pelenormal.png")}
+              style={styles.imageTipos}
+            />
 
-        <View style={styles.caixa}>
-          <Text>PELE NORMAL</Text>
-          <Image
-            source={require("../../assets/img/headerskincare.png")}
-            style={styles.image}
-          />
-          <Text style={styles.text}>
-            Sua pele tem um equilíbrio saudável, nem muito oleosa, nem muito
-            seca. Os poros são pequenos e você quase não sente a necessidade de
-            cuidados intensivos. No entanto, manter a hidratação é fundamental
-            para preservar esse equilíbrio.
-          </Text>
+            {expanded.normal && (
+              <View>
+                <Text style={styles.text}>
+                  Se a sua pele frequentemente parece repuxada, descama ou fica
+                  áspera, é provável que você tenha pele seca. Ela precisa de
+                  hidratação constante e cuidados mais nutritivos para repor a
+                  barreira protetora
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
-        <View style={styles.caixa}>
-          <Text>PELE SECA</Text>
-          <Image
-            source={require("../../assets/img/headerskincare.png")}
-            style={styles.image}
-          />
-          <Text style={styles.text}>
-            Se a sua pele frequentemente parece repuxada, descama ou fica
-            áspera, é provável que você tenha pele seca. Ela precisa de
-            hidratação constante e cuidados mais nutritivos para repor a
-            barreira protetora
-          </Text>
+        <View>
+          <TouchableOpacity
+            style={styles.caixa}
+            onPress={() => toggleExpand("normal")}
+          >
+            <View style={styles.row}>
+              <Text style={styles.caixaTitle}>PELE SECA</Text>
+              <Ionicons
+                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                size={24}
+                color="black"
+              />
+            </View>
+            <Image
+              source={require("../../assets/img/peleseca.png")}
+              style={styles.imageTipos}
+            />
+
+            {expanded.normal && (
+              <View>
+                <Text style={styles.text}>
+                  Se a sua pele frequentemente parece repuxada, descama ou fica
+                  áspera, é provável que você tenha pele seca. Ela precisa de
+                  hidratação constante e cuidados mais nutritivos para repor a
+                  barreira protetora
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
-        <View style={styles.caixa}>
-          <Text>PELE OLEOSA</Text>
-          <Image
-            source={require("../../assets/img/headerskincare.png")}
-            style={styles.image}
-          />
-          <Text style={styles.text}>
-            A sensação de brilho e poros dilatados são comuns para quem tem pele
-            oleosa. Mas não se preocupe, com os produtos certos você pode
-            controlar essa oleosidade e manter sua pele equilibrada.
-          </Text>
+        <View>
+          <TouchableOpacity
+            style={styles.caixa}
+            onPress={() => toggleExpand("normal")}
+          >
+            <View style={styles.row}>
+              <Text style={styles.caixaTitle}>PELE OLEOSA</Text>
+              <Ionicons
+                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                size={24}
+                color="black"
+              />
+            </View>
+            <Image
+              source={require("../../assets/img/peleoleosa.png")}
+              style={styles.imageTipos}
+            />
+
+            {expanded.normal && (
+              <View>
+                <Text style={styles.text}>
+                  A sensação de brilho e poros dilatados são comuns para quem
+                  tem pele oleosa. Mas não se preocupe, com os produtos certos
+                  você pode controlar essa oleosidade e manter sua pele
+                  equilibrada.
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
-        <View style={styles.caixa}>
-          <Text>PELE MISTA</Text>
-          <Image
-            source={require("../../assets/img/headerskincare.png")}
-            style={styles.image}
-          />
-          <Text style={styles.text}>
-            Se você nota oleosidade na zona T (testa, nariz e queixo), mas suas
-            bochechas são mais secas, sua pele é mista. O segredo está em
-            equilibrar os cuidados para atender às diferentes regiões do rosto.
-          </Text>
+        <View>
+          <TouchableOpacity
+            style={styles.caixa}
+            onPress={() => toggleExpand("normal")}
+          >
+            <View style={styles.row}>
+              <Text style={styles.caixaTitle}>PELE MISTA</Text>
+              <Ionicons
+                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                size={24}
+                color="black"
+              />
+            </View>
+            <Image
+              source={require("../../assets/img/pelemista.png")}
+              style={styles.imageTipos}
+            />
+
+            {expanded.normal && (
+              <View>
+                <Text style={styles.text}>
+                  Se você nota oleosidade na zona T (testa, nariz e queixo), mas
+                  suas bochechas são mais secas, sua pele é mista. O segredo
+                  está em equilibrar os cuidados para atender às diferentes
+                  regiões do rosto.
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
+
+       
         <View style={styles.caixa}>
           <Text>PELE SENSÍVEL</Text>
           <Image
@@ -198,21 +241,30 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
 
+  imageTipos: {
+    width: "100%",
+    height: 200,
+    resizeMode: "contain",
+    marginVertical: 5,
+    alignSelf: "center"
+  },
+
   caixa: {
     backgroundColor: "#f5f5f5",
     padding: 20,
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 30,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 4
     },
     shadowOpacity: 0.3,
-    elevation: 8
+    elevation: 8,
+    width: "98%"
   },
   titleImg: {
-    width: 360,
+    width: 395,
     height: 380,
     resizeMode: "contain",
     marginVertical: -170,
@@ -222,12 +274,12 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    justyfyContent: "space-between",
     alingItems: "center"
   },
   caixaTitle: {
-    fontSize: 20,
+    fontSize: 22,
     color: "#000",
-    fontFamily: "bold"
+    fontFamily: "medium",
+    width: 200
   }
 });
