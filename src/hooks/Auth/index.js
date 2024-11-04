@@ -8,14 +8,14 @@ const AuthContext = createContext({});
 export const Role = {
   SUPER: "SUPER",
   ADM: "ADM",
-  USER: "USER",
+  USER: "USER"
 };
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState({
-    autenticated: null,
+    authenticated: false,
     user: null,
-    role: null,
+    role: null
   });
 
   const { authUser } = useUserDatabase();
@@ -26,15 +26,15 @@ export function AuthProvider({ children }) {
 
       if (storagedUser) {
         setUser({
-          autenticated: true,
+          authenticated: true,
           user: JSON.parse(storagedUser),
-          role: JSON.parse(storagedUser).role,
+          role: JSON.parse(storagedUser).role
         });
       } else {
         setUser({
-          autenticated: false,
+          authenticated: false,
           user: null,
-          role: null,
+          role: null
         });
       }
     };
@@ -46,9 +46,9 @@ export function AuthProvider({ children }) {
     const response = await authUser({ email, password });
     if (!response) {
       setUser({
-        autenticated: false,
+        authenticated: false,
         user: null,
-        role: null,
+        role: null
       });
       throw new Error("Usuário ou senha inválidos");
     }
@@ -56,15 +56,19 @@ export function AuthProvider({ children }) {
     await AsyncStorage.setItem("@payment:user", JSON.stringify(response));
 
     setUser({
-      autenticated: true,
+      authenticated: true,
       user: response,
-      role: response.role,
+      role: response.role
     });
   };
 
   const singOut = async () => {
     await AsyncStorage.removeItem("@payment:user");
-    setUser({ autenticated: false, user: null, role: null });
+    setUser({
+      authenticated: false,
+      user: null,
+      role: null,
+    });
   };
 
   return (
