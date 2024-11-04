@@ -34,6 +34,17 @@ export async function initializeDatabase(database) {
             FOREIGN KEY(user_cadastro) REFERENCES users(id)
             );
 
+            CREATE ATABLE IF NOT EXISTS products (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              pro_nome TEXT,
+              marca TEXT,
+              descricao TEXT,
+              linkcompra TEXT,
+              role
+              created_at DATE DEFAULT CURRENT_TIMESTAMP, 
+              updated_at DATE
+            );
+
 
             CREATE INDEX IF NOT EXISTS idx_users_nome ON users (nome);
 

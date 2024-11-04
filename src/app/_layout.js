@@ -10,7 +10,7 @@ const StackLayout = () => {
     if (!user?.authenticated) {
       router.replace("signIn");
     } else {
-      router.push("(protected)");
+      router.push("(protected)/list");
     }
   }, [user]);
 

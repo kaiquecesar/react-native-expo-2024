@@ -9,7 +9,7 @@ export function usePaymentsDatabase() {
     valor_pago,
     data_pagamento,
     observacao,
-    numero_recibo,
+    numero_recibo
   }) {
     const statement = await database.prepareAsync(`
                 INSERT INTO payments (user_id, user_cadastro, valor_pago, data_pagamento, observacao, numero_recibo) 
@@ -23,9 +23,9 @@ export function usePaymentsDatabase() {
         $valor_pago: valor_pago,
         $data_pagamento: data_pagamento,
         $observacao: observacao,
-        $numero_recibo: numero_recibo,
+        $numero_recibo: numero_recibo
       });
-            
+
       const insertedID = result.lastInsertRowId.toString();
       return { insertedID };
     } catch (error) {
@@ -35,5 +35,14 @@ export function usePaymentsDatabase() {
     }
   }
 
-  return {createPayment};
+  async function getPayments() {
+    try {
+      const payments = await database.getAllAsync("SELECT * FROM payments");
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  return { createPayment, getPayments };
 }
