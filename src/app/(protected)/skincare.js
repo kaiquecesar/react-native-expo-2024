@@ -94,7 +94,7 @@ export default function Skincare() {
         <View>
           <TouchableOpacity
             style={styles.caixa}
-            onPress={() => toggleExpand("normal")}
+            onPress={() => toggleExpand("seca")}
           >
             <View style={styles.row}>
               <Text style={styles.caixaTitle}>PELE SECA</Text>
@@ -124,7 +124,7 @@ export default function Skincare() {
         <View>
           <TouchableOpacity
             style={styles.caixa}
-            onPress={() => toggleExpand("normal")}
+            onPress={() => toggleExpand("oleosa")}
           >
             <View style={styles.row}>
               <Text style={styles.caixaTitle}>PELE OLEOSA</Text>
@@ -154,7 +154,7 @@ export default function Skincare() {
         <View>
           <TouchableOpacity
             style={styles.caixa}
-            onPress={() => toggleExpand("normal")}
+            onPress={() => toggleExpand("mista")}
           >
             <View style={styles.row}>
               <Text style={styles.caixaTitle}>PELE MISTA</Text>
@@ -180,20 +180,6 @@ export default function Skincare() {
               </View>
             )}
           </TouchableOpacity>
-        </View>
-
-       
-        <View style={styles.caixa}>
-          <Text>PELE SENSÍVEL</Text>
-          <Image
-            source={require("../../assets/img/headerskincare.png")}
-            style={styles.image}
-          />
-          <Text style={styles.text}>
-            Sua pele fica irritada facilmente? Produtos mais fortes podem causar
-            vermelhidão ou coceira? A pele sensível precisa de produtos suaves e
-            específicos, além de muito carinho!
-          </Text>
         </View>
       </View>
     </ScrollView>
