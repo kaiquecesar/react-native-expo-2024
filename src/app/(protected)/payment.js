@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View,
+  TouchableOpacity,
+  View
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { optional, z } from "zod";
@@ -26,7 +27,7 @@ const paymentSchema = z.object({
   user_cadastro: z.number().int().positive(),
   data_pagamento: z.date(),
   numero_recibo: z.string(),
-  observacao: z.string().optional(),
+  observacao: z.string().optional()
 });
 
 export default function Payment() {
@@ -41,6 +42,7 @@ export default function Payment() {
   const { user } = useAuth();
   const { createPayment } = usePaymentsDatabase();
   const { getAllUsers } = useUserDatabase();
+
   const handleCalendar = (event, selectedDate) => {
     setViewCalendar(false);
     setData(selectedDate);
@@ -69,7 +71,7 @@ export default function Payment() {
       }
       let valorPtBR = Intl.NumberFormat("pt-BR", {
         style: "decimal",
-        minimumFractionDigits: 2,
+        minimumFractionDigits: 2
       }).format(valorConvertido);
       setValor(valorPtBR);
     } catch (error) {
@@ -97,11 +99,15 @@ export default function Payment() {
       valor_pago: convertValue(valor),
       data_pagamento: data,
       numero_recibo: numeroRecibo,
-      observacao,
+      observacao
     };
 
     try {
       const result = await paymentSchema.parseAsync(payment);
+      payment.data_pagamento = payment.data_pagamento
+        .toISOString()
+        .replace("T", " ")
+        .split(".")[0];
       const { insertedID } = await createPayment(payment);
       console.log(insertedID);
       setValor("0,00");
@@ -135,8 +141,8 @@ export default function Payment() {
           />
         </View>
         <View style={styles.inputView}>
-        <FontAwesome5 name="barcode" size={24} color="black" />
-        <TextInput
+          <FontAwesome5 name="barcode" size={24} color="black" />
+          <TextInput
             placeholder="Número do Recibo"
             keyboardType="decimal-pad"
             style={styles.inputValor}
@@ -160,17 +166,20 @@ export default function Payment() {
           </Picker>
         </View>
         <View style={styles.inputView}>
-          <Text onPress={() => setViewCalendar(true)} style={styles.inputData}>
-            {data.toLocaleDateString().split("T")[0]}
-          </Text>
-          {viewCalendar && (
-            <DateTimePicker
-              value={data}
-              onChange={handleCalendar}
-              mode="date"
-              testID="dateTimePicker"
-            />
-          )}
+          <TouchableOpacity onPress={() => setViewCalendar(true)}>
+            <Text style={styles.inputData}>
+              {data.toLocaleDateString().split("T")[0]}
+            </Text>
+            </TouchableOpacity>
+            {viewCalendar && (
+              <DateTimePicker
+                value={data}
+                onChange={handleCalendar}
+                mode="date"
+                testID="dateTimePicker"
+                display="default"
+              />
+            )}
         </View>
         <View style={styles.inputView}>
           <TextInput
@@ -196,7 +205,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    padding: 10
   },
 
   inputView: {
@@ -216,13 +225,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 20,
     width: "100%",
-    padding: 10,
+    padding: 10
   },
 
   inputValor: {
     flex: 1,
     textAlign: "right",
-    padding: 10,
+    padding: 10
   },
   inputData: {
     width: "100%",
@@ -230,7 +239,7 @@ const styles = StyleSheet.create({
     fontFamily: "regular",
     fontSize: 20,
     padding: 10,
-    color: "#999",
+    color: "#999"
   },
   inputObservacao: {
     width: "100%",
@@ -239,6 +248,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     color: "#999",
-    lineHeight: 20,
-  },
+    lineHeight: 20
+  }
 });

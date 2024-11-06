@@ -34,7 +34,7 @@ export async function initializeDatabase(database) {
             FOREIGN KEY(user_cadastro) REFERENCES users(id)
             );
 
-            CREATE ATABLE IF NOT EXISTS products (
+            CREATE TABLE IF NOT EXISTS products (
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               pro_nome TEXT,
               marca TEXT,
@@ -51,9 +51,10 @@ export async function initializeDatabase(database) {
             CREATE INDEX IF NOT EXISTS idx_payments_data_pagamento ON payments (data_pagamento);
 
 
-            INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Super', 'super@gmail.com', 'super!', 'SUPER');
+            /* INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Super', 'super@gmail.com', 'super!', 'SUPER');
             INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Admin', 'admin@gmail.com', 'admin!', 'ADMIN');
-            INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('User', 'user@gmail.com', 'user!', 'USER');
+            INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('User', 'user@gmail.com', 'user!', 'USER'); */
+
             `);
   } catch (error) {
     console.log(error);
