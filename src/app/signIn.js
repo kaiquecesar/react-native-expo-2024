@@ -10,7 +10,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { useAuth } from "../hooks/Auth";
 import { router } from "expo-router";
@@ -77,12 +77,21 @@ export default function App() {
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.linkText}
-          onPress={() => router.push("/about")}
-        >
-          <Text style={styles.linkText}>Sobre</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            style={styles.linkText}
+            onPress={() => router.push("/about")}
+          >
+            <Text style={styles.linkText}>Sobre  </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.linkText}
+            onPress={() => router.push("/maintenance")}
+          >
+            <Text style={styles.linkText}>   Manutenção</Text>
+          </TouchableOpacity>
+        </View>
 
         <StatusBar style="auto" />
       </View>
@@ -95,13 +104,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 15,
+    gap: 15
   },
   title: {
     fontFamily: "medium",
     fontSize: 23,
     marginHorizontal: 61,
-    color: "#1e5796",
+    color: "#1e5796"
   },
   inputbox: {
     flexDirection: "row",
@@ -113,13 +122,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 15,
     width: "90%",
-    marginBottom: 10,
+    marginBottom: 10
   },
   emailinput: {
     flex: 1,
     fontFamily: "regular",
     fontSize: 18,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
   },
   button: {
     width: "80%",
@@ -131,16 +140,16 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 4
     },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
-    elevation: 8,
+    elevation: 8
   },
   buttonText: {
     color: "white",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   backbox: {
     marginTop: 280,
@@ -151,17 +160,17 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 4
     },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
-    elevation: 8,
+    elevation: 8
   },
   linkText: {
     color: "#1e5796",
     textDecorationLine: "underline",
     fontSize: 18,
     marginTop: -5,
-    fontFamily: "medium",
-  },
+    fontFamily: "medium"
+  }
 });
