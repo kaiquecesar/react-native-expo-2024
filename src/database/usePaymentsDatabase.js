@@ -34,7 +34,7 @@ export function usePaymentsDatabase() {
         $observacao: observacao,
         $numero_recibo: numero_recibo
       });
-      
+
       const insertedID = result.lastInsertRowId.toString();
       return { insertedID };
     } catch (error) {
@@ -48,7 +48,9 @@ export function usePaymentsDatabase() {
     try {
       const payments = await database.getAllAsync(
         "SELECT p.*, u.nome FROM payments p, users u WHERE u.id = p.user_id"
+        //"SELECT * FROM payments"
       );
+      return payments;
     } catch (error) {
       console.error(error);
       throw error;

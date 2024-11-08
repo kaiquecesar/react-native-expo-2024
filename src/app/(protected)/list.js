@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { FlashList } from "@shopify/flash-list";
 
@@ -10,7 +10,6 @@ export default function List() {
   async function fetchData() {
     //vai buscar no banco de dados os pagamentos
     const payments = await getPayments();
-    console.log(payments);
     setData(payments);
   }
 
