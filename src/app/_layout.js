@@ -8,8 +8,8 @@ const StackLayout = () => {
 
   useEffect(() => {
     if (!user?.authenticated) {
-      //router.replace("signIn");
-      router.push("maintenance");
+      router.replace("signIn");
+      //router.push("maintenance");
     } else {
       router.push("(protected)/list");
     }

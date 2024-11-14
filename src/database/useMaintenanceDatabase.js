@@ -5,17 +5,13 @@ export function useMaintenanceDatabase() {
 
   async function resetDatabase() {
     try {
-      await database.transaction(async () => {
         //DELETE -> apaga os dados da tabela/entidade
         //DROP -> apaga a tabela/entidade
-
-        try {
-          database.execAsync(
-            `DROP INDEX IF EXISTS idx_payments_data_pagamento;`
-          );
-          database.execAsync(`DROP INDEX IF EXISTS idx_users_nome;`);
-          database.execAsync(`DROP TABLE IF EXISTS payments;`);
-          database.execAsync(`
+          await database.execAsync(`DROP INDEX IF EXISTS idx_payments_data_pagamento;`);
+          await database.execAsync(`DROP INDEX IF EXISTS idx_users_nome;`);
+          await database.execAsync(`DROP TABLE IF EXISTS payments;`);
+          await database.execAsync(`DROP TABLE IF EXISTS users;`);
+          await database.execAsync(`
             CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             nome TEXT,
@@ -27,7 +23,7 @@ export function useMaintenanceDatabase() {
             updated_at DATE
             );
         `);
-          database.execAsync(`
+          await database.execAsync(`
             CREATE TABLE payments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
@@ -42,20 +38,78 @@ export function useMaintenanceDatabase() {
             FOREIGN KEY(user_cadastro) REFERENCES users(id)
             );
         `);
-
+        
+        //para toda pesquisa /ordenação no banco que não seja chave primeira, vc deve criar indices
           database.execAsync(`CREATE INDEX IF NOT EXISTS idx_users_nome ON users (nome);`);
           database.execAsync(`CREATE INDEX IF NOT EXISTS idx_payments_data_pagamento ON payments (data_pagamento);`);
+          
+        /*
+         *#TODO - Acicionar usuários padrão
+        */  
           database.execAsync(`INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Super', 'super@gmail.com', 'super!', 'SUPER');`);
           database.execAsync(`INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Admin', 'admin@gmail.com', 'admin!', 'ADMIN');`);
           database.execAsync(`INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('User', 'user@gmail.com', 'user!', 'USER');`);
+        
+        console.log("Database reset successfully");
         } catch (error) {
           console.log("useMaintenanceDatabase resetDatabase error: ", error);
+          throw error;
         }
-      });
-      console.log("useMaintenanceDatabase resetDatabase sucess: ");
-    } catch (error) {
-      console.log("useMaintenanceDatabase resetDatabase error: ", error);
-    }
-  }
-  return { resetDatabase };
+      }
+
+      async function importUsers() {
+        const URL = "https://api.mockaroo.com/api/122ae070?count=406key=1af2bf00"
+
+        try {
+          //recupera/solicita os dados da API/ da internet
+          const response = await fetch(URL);
+          //converte a resposta para o padrão jason -> Javascript object notation
+          //converte a resposta para o tipo texto
+          const users = await response.text();
+
+          await database.withTransactionAsync(async () => {
+            users.split(/\r?\n/).forEach(async (line) => {
+              try {
+                await database.execAsync(line);
+              } catch (error) {
+                console.error("error importing user: ", error);
+              }
+            })
+          })
+          console.log("Usuários importados com sucesso")
+        } catch (error) {
+          consolen.error("useMaintenanceDatabase importUsers error", error);
+          throw error;
+        }
+      }
+
+      async function importPayments() {
+        // implementar a função de importação de pagamentos
+        const URL = "https://api.mockaroo.com/api/122ae070?count=406key=1af2bf00"
+
+        try {
+          //recupera/solicita os dados da API/ da internet
+          const response = await fetch(URL);
+          //converte a resposta para o padrão jason -> Javascript object notation
+          //converte a resposta para o tipo texto
+          const users = await response.text();
+
+          await database.withTransactionAsync(async () => {
+            users.split(/\r?\n/).forEach(async (line) => {
+              try {
+                await database.execAsync(line);
+              } catch (error) {
+                console.error("error importing user: ", error);
+              }
+            })
+          })
+          console.log("Usuários importados com sucesso")
+        } catch (error) {
+          consolen.error("useMaintenanceDatabase importUsers error", error);
+          throw error;
+        }
+      }
+    
+
+  return { resetDatabase, importUsers, importPayments }
 }

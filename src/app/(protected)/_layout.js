@@ -75,6 +75,13 @@ const DrawerLayout = () => {
             <FontAwesome5 name="hand-sparkles" size={20} color="black" />          
           ),
         }} />    
+        <Drawer.Screen name="details" options={{
+          drawerLabel: "Detalhes",
+          headerTitle: "Detalhes",
+          drawerIcon: () => (
+            <Ionicons name="" size={20} color="black" />
+          ),
+        }} /> 
       </Drawer>
     </GestureHandlerRootView>
   );

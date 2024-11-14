@@ -47,7 +47,10 @@ export function usePaymentsDatabase() {
   async function getPayments(page) {
     try {
       const payments = await database.getAllAsync(
-        `SELECT p.*, u.nome FROM payments p, users u WHERE u.id = p.user_id ORDER BY data_pagamento DESC LIMIT 5 OFFSET ${page * 5}`)
+        `SELECT p.*, u.nome FROM payments p, users u WHERE u.id = p.user_id ORDER BY data_pagamento DESC LIMIT 5 OFFSET ${
+          page * 5
+        }`
+      );
       return payments;
     } catch (error) {
       console.error(error);
@@ -55,5 +58,17 @@ export function usePaymentsDatabase() {
     }
   }
 
-  return { createPayment, getPayments };
+  async function getPayment(id) {
+    try {
+      const payment = await database.getFirstAsync(
+        `SELECT p.*, u.nome FROM payments p, users u WHERE u.id = p.user_id AND p.id = ${id}`
+      );
+      return payment;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  return { createPayment, getPayments, getPayment };
 }
