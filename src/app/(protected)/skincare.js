@@ -61,7 +61,8 @@ export default function Skincare() {
         </Text>
 
         <Text style={styles.title}>TIPOS DE PELE</Text>
-        <View>
+        <View style={{flexDirection: "row"}}>
+          <View>
           <TouchableOpacity
             style={styles.caixa}
             onPress={() => toggleExpand("normal")}
@@ -91,7 +92,7 @@ export default function Skincare() {
             )}
           </TouchableOpacity>
         </View>
-        <View>
+        <View >
           <TouchableOpacity
             style={styles.caixa}
             onPress={() => toggleExpand("seca")}
@@ -99,7 +100,7 @@ export default function Skincare() {
             <View style={styles.row}>
               <Text style={styles.caixaTitle}>PELE SECA</Text>
               <Ionicons
-                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                name={expanded.seca ? "chevron-up" : "chevron-down"}
                 size={24}
                 color="black"
               />
@@ -109,7 +110,7 @@ export default function Skincare() {
               style={styles.imageTipos}
             />
 
-            {expanded.normal && (
+            {expanded.seca && (
               <View>
                 <Text style={styles.text}>
                   Se a sua pele frequentemente parece repuxada, descama ou fica
@@ -121,7 +122,9 @@ export default function Skincare() {
             )}
           </TouchableOpacity>
         </View>
-        <View>
+        </View>
+        <View style={{flexDirection: "row"}}>
+          <View>
           <TouchableOpacity
             style={styles.caixa}
             onPress={() => toggleExpand("oleosa")}
@@ -129,7 +132,7 @@ export default function Skincare() {
             <View style={styles.row}>
               <Text style={styles.caixaTitle}>PELE OLEOSA</Text>
               <Ionicons
-                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                name={expanded.oleosa ? "chevron-up" : "chevron-down"}
                 size={24}
                 color="black"
               />
@@ -139,7 +142,7 @@ export default function Skincare() {
               style={styles.imageTipos}
             />
 
-            {expanded.normal && (
+            {expanded.oleosa && (
               <View>
                 <Text style={styles.text}>
                   A sensação de brilho e poros dilatados são comuns para quem
@@ -159,7 +162,7 @@ export default function Skincare() {
             <View style={styles.row}>
               <Text style={styles.caixaTitle}>PELE MISTA</Text>
               <Ionicons
-                name={expanded.normal ? "chevron-up" : "chevron-down"}
+                name={expanded.mista ? "chevron-up" : "chevron-down"}
                 size={24}
                 color="black"
               />
@@ -169,7 +172,7 @@ export default function Skincare() {
               style={styles.imageTipos}
             />
 
-            {expanded.normal && (
+            {expanded.mista && (
               <View>
                 <Text style={styles.text}>
                   Se você nota oleosidade na zona T (testa, nariz e queixo), mas
@@ -181,6 +184,8 @@ export default function Skincare() {
             )}
           </TouchableOpacity>
         </View>
+        </View>
+        
       </View>
     </ScrollView>
   );
