@@ -31,11 +31,11 @@ export default function Skincare() {
     >
       <Image
         style={styles.headerImg}
-        source={require("../../assets/img/headerskincare.png")}
+        source={require("../../assets/img/skincare/headerskincare.png")}
       />
       <Image
         style={styles.titleImg}
-        source={require("../../assets/img/tituloo.png")}
+        source={require("../../assets/img/skincare/tituloo.png")}
       />
       <View
         style={{
@@ -60,7 +60,11 @@ export default function Skincare() {
           necessidades específicas.
         </Text>
 
-        <Text style={styles.title}>TIPOS DE PELE</Text>
+        <Image
+        style={styles.titleTipos}
+        source={require("../../assets/img/skincare/tiposdepele.png")}
+        />
+
         <View style={{flexDirection: "row"}}>
           <View>
           <TouchableOpacity
@@ -76,7 +80,7 @@ export default function Skincare() {
               />
             </View>
             <Image
-              source={require("../../assets/img/pelenormal.png")}
+              source={require("../../assets/img/skincare/pelenormal.png")}
               style={styles.imageTipos}
             />
 
@@ -106,7 +110,7 @@ export default function Skincare() {
               />
             </View>
             <Image
-              source={require("../../assets/img/peleseca.png")}
+              source={require("../../assets/img/skincare/peleseca.png")}
               style={styles.imageTipos}
             />
 
@@ -138,7 +142,7 @@ export default function Skincare() {
               />
             </View>
             <Image
-              source={require("../../assets/img/peleoleosa.png")}
+              source={require("../../assets/img/skincare/peleoleosa.png")}
               style={styles.imageTipos}
             />
 
@@ -168,7 +172,7 @@ export default function Skincare() {
               />
             </View>
             <Image
-              source={require("../../assets/img/pelemista.png")}
+              source={require("../../assets/img/skincare/pelemista.png")}
               style={styles.imageTipos}
             />
 
@@ -255,6 +259,15 @@ const styles = StyleSheet.create({
     width: "98%"
   },
   titleImg: {
+    width: 395,
+    height: 380,
+    resizeMode: "contain",
+    marginVertical: -170,
+    alignSelf: "center",
+    marginTop: -199,
+    marginRight: 0
+  },
+  titleTipos: {
     width: 395,
     height: 380,
     resizeMode: "contain",

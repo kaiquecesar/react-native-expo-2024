@@ -5,6 +5,7 @@ import {
   FontAwesome5,
   FontAwesome6,
   Ionicons,
+  MaterialCommunityIcons,
   MaterialIcons
 } from "@expo/vector-icons";
 import {
@@ -12,7 +13,7 @@ import {
   DrawerItemList
 } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
-import { Button, Image, Text, TouchableOpacity, View } from "react-native";
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useAuth } from "../../hooks/Auth/index";
 
@@ -88,11 +89,19 @@ const DrawerLayout = () => {
           }}
         />
         <Drawer.Screen
+          name="cabelo"
+          options={{
+            drawerLabel: "Cabelos",
+            headerTitle: "Cabelos",
+            drawerIcon: () => <MaterialCommunityIcons name="face-woman-shimmer" size={24} color="black" />
+          }}
+        />
+        <Drawer.Screen
           name="produtos"
           options={{
             drawerLabel: "Produtos",
             headerTitle: "Produtos",
-            drawerIcon: () => <Ionicons name="" size={20} color="black" />
+            drawerIcon: () => <Ionicons name="pricetags" size={24} color="black" />
           }}
         />
         <Drawer.Screen
@@ -121,8 +130,9 @@ const DrawerLayout = () => {
             drawerLabel: "Pagamentos",
             headerTitle: "Pagamentos",
             drawerIcon: () => (
-<MaterialIcons name="payments" size={24} color="black" />            )
+            <MaterialIcons name="payments" size={24} color="black" />            )
           }}
+          style={styles.nome}
         />
 
         <Drawer.Screen
@@ -132,6 +142,7 @@ const DrawerLayout = () => {
             headerTitle: "Detalhes",
             drawerIcon: () => <Ionicons name="sparkles" size={20} color="black" />
           }}
+          style={styles.nome}
         />
       </Drawer>
     </GestureHandlerRootView>
@@ -141,3 +152,10 @@ const DrawerLayout = () => {
 export default function Layout() {
   return DrawerLayout();
 }
+
+const styles = StyleSheet.create({
+  nome: {
+    fontFamily: "bold",
+    fontSize: 30
+  }
+})
