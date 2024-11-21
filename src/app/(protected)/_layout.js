@@ -80,10 +80,7 @@ const DrawerLayout = () => {
             drawerLabel: "SkinCare",
             headerTitle: "SkinCare",
             drawerIcon: () => (
-              (<MaterialIcons name="spa" size={20} color="black" />),
-              (<Ionicons name="ios-flower" size={20} color="black" />),
-              (<FontAwesome name="smile" size={20} color="black" />),
-              (<Ionicons name="ios-body" size={20} color="black" />),
+              
               (<FontAwesome5 name="hand-sparkles" size={20} color="black" />)
             )
           }}
