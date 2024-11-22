@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   headerImg: {
     marginTop: -30,
     marginLeft: -20,
-    width: 420,
+    width: 400,
     height: 250,
     resizeMode: "contain",
     shadowColor: "#000",

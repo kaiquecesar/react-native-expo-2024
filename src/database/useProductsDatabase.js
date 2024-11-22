@@ -1,9 +1,9 @@
 import { useSQLiteContext } from "expo-sqlite";
 
-export function usePaymentsDatabase() {
+export function useProductsDatabase() {
   const database = useSQLiteContext();
 
-  async function createPayment({
+  async function createProducts({
 
     //id INTEGER PRIMARY KEY AUTOINCREMENT,
     //pro_nome TEXT,

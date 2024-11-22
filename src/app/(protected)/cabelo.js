@@ -140,9 +140,9 @@ export default function Skincare() {
 
 const styles = StyleSheet.create({
   headerImg: {
-    marginTop: -8,
+    marginTop: -15,
     marginRight: 120,
-    width: 420,
+    width: "100%",
     height: 250,
     resizeMode: "contain",
     shadowColor: "#000",

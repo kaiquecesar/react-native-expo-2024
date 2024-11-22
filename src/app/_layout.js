@@ -11,7 +11,7 @@ const StackLayout = () => {
       router.replace("signIn");
       //router.push("maintenance");
     } else {
-      router.push("(protected)/list");
+      router.push("(protected)/produtos");
     }
   }, [user]);
 

@@ -1,231 +1,206 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Alert,
-  Button,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { optional, z } from "zod";
-import { useAuth } from "../../hooks/Auth/index";
-import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
-import { useUserDatabase } from "../../database/useUserDatabase";
+import { z } from "zod";
 
-const paymentSchema = z.object({
-  valor_pago: z.number().gt(0),
-  user_id: z.number().int().positive(),
-  user_cadastro: z.number().int().positive(),
-  data_pagamento: z.string().datetime(),
-  numero_recibo: z.string(),
-  observacao: z.string().optional()
+import { useUserDatabase } from "../../database/useUserDatabase";
+import { useProductsDatabase } from "../../database/useProductsDatabase";
+import { usePickImage } from "../utils/pickImage";
+
+const productSchema = z.object({
+  pro_nome: z.string(),
+  marca: z.string(),
+  linkcompra: z.string(),
+  descricao: z.string()
 });
 
 export default function Product() {
-  const [valor, setValor] = useState("0,00");
-  const [sugestoes, setSugestoes] = useState([]);
-  const [id, setId] = useState(1);
-  const [data, setData] = useState(new Date());
-  const [observacao, setObservacao] = useState("");
-  const [numeroRecibo, setNumeroRecibo] = useState("");
-  const valueRef = useRef();
-  const { user } = useAuth();
-  const { createPayment } = usePaymentsDatabase();
+  const [pro_nome, setPro_nome] = useState("");
+  const { pickImage } = usePickImage();
+  const [marca, setMarca] = useState("");
+  const [linkcompra, setLinkCompra] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const { createProducts } = useProductsDatabase();
   const { getAllUsers } = useUserDatabase();
-
-
-  useEffect(() => {
-    (async () => {
-      valueRef?.current?.focus();
-      try {
-        const users = await getAllUsers();
-        setSugestoes(users);
-        setId(users[0].id);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
-  const handleChangeValor = (value) => {
-    try {
-      let valorLimpo = value.replace(",", "").replace(".", "");
-      let valorConvertido = Number(valorLimpo) / 100;
-      if (valorConvertido === 0 || isNaN(valorConvertido)) {
-        setValor("0,00");
-        return;
-      }
-      let valorPtBR = Intl.NumberFormat("pt-BR", {
-        style: "decimal",
-        minimumFractionDigits: 2
-      }).format(valorConvertido);
-      setValor(valorPtBR);
-    } catch (error) {
-      setValor("0,00");
-    }
-  };
-
-  const convertValue = (value) => {
-    try {
-      let valorLimpo = value.replace(",", "").replace(".", "");
-      let valorConvertido = Number(valorLimpo) / 100;
-      if (valorConvertido === 0 || isNaN(valorConvertido)) {
-        return 0;
-      }
-      return valorConvertido;
-    } catch (error) {
-      return valorConvertido;
-    }
-  };
+  const valueRef = useRef();
 
   const handleSubmit = async () => {
-    const payment = {
-      user_id: id,
-      user_cadastro: user?.user?.id || 0,
-      valor_pago: convertValue(valor),
-      data_pagamento: data.toISOString(),
-      numero_recibo: numeroRecibo,
-      observacao,
-    };
-
+    const products = { pro_nome, marca, linkcompra, descricao };
     try {
-      const result = await paymentSchema.parseAsync(payment);
-      payment.data_pagamento = new Date(payment.data_pagamento).toISOString().replace("T", " ").split(".")[0];
-      //payment.data_pagamento = new payment.data_pagamento
-        //.toISOString()
-        //.replace("T", " ")
-        //.split(".")[0];
-      const { insertedID } = await createPayment(payment);
+      await productSchema.parseAsync(products);
+      const { insertedID } = await createProducts(products);
       console.log(insertedID);
-      setValor("0,00");
-      setId(sugestoes[0].id);
-      setData(new Date());
-      setObservacao("");
-      setNumeroRecibo("");
+      setPro_nome("");
+      setMarca("");
+      setLinkCompra("");
+      setDescricao("");
       valueRef?.current?.focus();
     } catch (error) {
-      Alert.alert("Error", `Erro ao inserir pagamento: ${error.message}`);
+      Alert.alert("Erro", `Erro ao inserir produto: ${error.message}`);
       console.log(error);
     }
   };
 
-  return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View style={styles.content}>
-        <Text style={styles.title}>Cadastre um Produto</Text>
-        <View style={styles.inputView}>
-          <Ionicons name="wallet-outline" size={24} color="black" />
-          <TextInput
-            placeholder="Nome"
-            keyboardType="decimal-pad"
-            style={styles.inputValor}
-            value={valor}
-            onChangeText={(newValue) => handleChangeValor(newValue)}
-            ref={valueRef}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <FontAwesome5 name="barcode" size={24} color="black" />
-          <TextInput
-            placeholder="Marca"
-            keyboardType="decimal-pad"
-            style={styles.inputValor}
-            value={numeroRecibo}
-            onChangeText={setNumeroRecibo}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <FontAwesome5 name="barcode" size={24} color="black" />
-          <TextInput
-            placeholder="Link de Compra"
-            keyboardType="decimal-pad"
-            style={styles.inputValor}
-            value={numeroRecibo}
-            onChangeText={setNumeroRecibo}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            placeholder="Descrição"
-            style={styles.inputObservacao}
-            value={observacao}
-            onChangeText={setObservacao}
-            multiline={true}
-          />
-        </View>
-        
-        
-        
-        <View style={styles.contentButtons}>
-          <TouchableOpacity onPress={handleSubmit}><Text>Salvar</Text></TouchableOpacity>
-          <TouchableOpacity><Text>Continuar</Text></TouchableOpacity>
-          <TouchableOpacity onPress={() => router.back()}><Text>Cancelar</Text></TouchableOpacity>
+  const handlePickImage = async () => {
+    try {
+      const image = await pickImage();
+      console.log("Image: ", image);
+    } catch (error) {
+      console.log("handlePickImage: ", error);
+      Alert.alert("Erro ao buscar imagem");
+    }
+  };
 
+  return (
+    <ScrollView>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.content}>
+          <Text style={styles.title}>Cadastre um Produto</Text>
+
+          <View style={styles.inputView}>
+            <FontAwesome5 name="tag" size={20} color="#666" />
+            <TextInput
+              placeholder="Nome do Produto"
+              style={styles.input}
+              value={pro_nome}
+              onChangeText={setPro_nome}
+            />
+          </View>
+
+          <View>
+            <TouchableOpacity title="Escolher Imagem" onPress={handlePickImage}>
+              <Text> Escolher Imagem</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.inputView}>
+            <FontAwesome5 name="industry" size={20} color="#666" />
+            <TextInput
+              placeholder="Marca"
+              style={styles.input}
+              value={marca}
+              onChangeText={setMarca}
+            />
+          </View>
+
+          <View style={styles.inputView}>
+            <FontAwesome5 name="shopping-cart" size={20} color="#666" />
+            <TextInput
+              placeholder="Link de Compra"
+              style={styles.input}
+              value={linkcompra}
+              onChangeText={setLinkCompra}
+            />
+          </View>
+
+          <View style={styles.inputView}>
+            <FontAwesome5 name="clipboard" size={20} color="#666" />
+            <TextInput
+              placeholder="Descrição"
+              style={styles.input}
+              value={descricao}
+              onChangeText={setDescricao}
+            />
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.buttonSave} onPress={handleSubmit}>
+              <Text style={styles.buttonText}>Salvar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonContinue}>
+              <Text style={styles.buttonText}>Continuar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonCancel}
+              onPress={() => router.back()}
+            >
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    justifyContent: "center",
+    padding: 20,
     alignItems: "center",
-    padding: 10
+    backgroundColor: "#f8f9fa"
   },
-
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 20
+  },
   inputView: {
-    borderColor: "black",
-    borderWidth: 2,
-    width: "100%",
-    margin: 10,
+    flexDirection: "row",
     alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
     borderRadius: 10,
-    margin: 5,
+    padding: 10,
+    marginBottom: 15,
+    backgroundColor: "#fff",
+    width: "100%"
   },
-
-  contentButtons: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 20,
-    width: "100%",
-    padding: 10
-  },
-
-  inputValor: {
+  input: {
     flex: 1,
-    textAlign: "right",
-    padding: 10
+    marginLeft: 10,
+    fontSize: 16,
+    color: "#333"
   },
-  inputData: {
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     width: "100%",
-    textAlign: "center",
-    fontFamily: "regular",
-    fontSize: 20,
-    padding: 10,
-    color: "#999"
+    marginTop: 20
   },
-  inputObservacao: {
-    width: "100%",
-    textAlign: "center",
-    fontFamily: "regular",
-    fontSize: 20,
-    padding: 10,
-    color: "#999",
-    lineHeight: 20
+  buttonSave: {
+    flex: 1,
+    marginRight: 5,
+    backgroundColor: "#28a745",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center"
+  },
+  buttonContinue: {
+    flex: 1,
+    marginHorizontal: 5,
+    backgroundColor: "#007bff",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center"
+  },
+  buttonCancel: {
+    flex: 1,
+    marginLeft: 5,
+    backgroundColor: "#dc3545",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center"
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16
   }
 });
