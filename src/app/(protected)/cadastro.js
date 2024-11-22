@@ -19,7 +19,6 @@ import { optional, z } from "zod";
 import { useAuth } from "../../hooks/Auth/index";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { useUserDatabase } from "../../database/useUserDatabase";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const paymentSchema = z.object({
   valor_pago: z.number().gt(0),
@@ -30,12 +29,11 @@ const paymentSchema = z.object({
   observacao: z.string().optional()
 });
 
-export default function Payment() {
+export default function Product() {
   const [valor, setValor] = useState("0,00");
   const [sugestoes, setSugestoes] = useState([]);
   const [id, setId] = useState(1);
   const [data, setData] = useState(new Date());
-  const [viewCalendar, setViewCalendar] = useState(false);
   const [observacao, setObservacao] = useState("");
   const [numeroRecibo, setNumeroRecibo] = useState("");
   const valueRef = useRef();
@@ -43,10 +41,6 @@ export default function Payment() {
   const { createPayment } = usePaymentsDatabase();
   const { getAllUsers } = useUserDatabase();
 
-  const handleCalendar = (event, selectedDate) => {
-    setViewCalendar(false);
-    setData(selectedDate);
-  };
 
   useEffect(() => {
     (async () => {
@@ -129,11 +123,11 @@ export default function Payment() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.content}>
-        <Text style={styles.title}>Inserir Pagamentos</Text>
+        <Text style={styles.title}>Cadastre um Produto</Text>
         <View style={styles.inputView}>
           <Ionicons name="wallet-outline" size={24} color="black" />
           <TextInput
-            placeholder="Valor"
+            placeholder="Nome"
             keyboardType="decimal-pad"
             style={styles.inputValor}
             value={valor}
@@ -144,7 +138,7 @@ export default function Payment() {
         <View style={styles.inputView}>
           <FontAwesome5 name="barcode" size={24} color="black" />
           <TextInput
-            placeholder="Número do Recibo"
+            placeholder="Marca"
             keyboardType="decimal-pad"
             style={styles.inputValor}
             value={numeroRecibo}
@@ -152,49 +146,32 @@ export default function Payment() {
           />
         </View>
         <View style={styles.inputView}>
-          <Picker
-            selectedValue={id}
-            onValueChange={(itemVlaue, index) => {
-              setId(Number(itemVlaue));
-            }}
-            style={{ width: "100%" }}
-          >
-            {sugestoes?.map((item) => {
-              return (
-                <Picker.Item key={item.id} label={item.nome} value={item.id} />
-              );
-            })}
-          </Picker>
-        </View>
-        <View style={styles.inputView}>
-          <TouchableOpacity onPress={() => setViewCalendar(true)}>
-            <Text style={styles.inputData}>
-              {data.toLocaleDateString().split("T")[0]}
-            </Text>
-            </TouchableOpacity>
-            {viewCalendar && (
-              <DateTimePicker
-                value={data}
-                onChange={handleCalendar}
-                mode="date"
-                testID="dateTimePicker"
-                display="default"
-              />
-            )}
+          <FontAwesome5 name="barcode" size={24} color="black" />
+          <TextInput
+            placeholder="Link de Compra"
+            keyboardType="decimal-pad"
+            style={styles.inputValor}
+            value={numeroRecibo}
+            onChangeText={setNumeroRecibo}
+          />
         </View>
         <View style={styles.inputView}>
           <TextInput
-            placeholder="Observações"
+            placeholder="Descrição"
             style={styles.inputObservacao}
             value={observacao}
             onChangeText={setObservacao}
             multiline={true}
           />
         </View>
+        
+        
+        
         <View style={styles.contentButtons}>
-          <Button title="Salvar" onPress={handleSubmit} />
-          <Button title="Continuar" />
-          <Button title="Cancelar" onPress={() => router.back()} />
+          <TouchableOpacity onPress={handleSubmit}><Text>Salvar</Text></TouchableOpacity>
+          <TouchableOpacity><Text>Continuar</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => router.back()}><Text>Cancelar</Text></TouchableOpacity>
+
         </View>
       </View>
     </KeyboardAvoidingView>

@@ -372,7 +372,8 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
-    elevation: 4
+    elevation: 4,
+    marginBottom: 20
   },
   problemCardAcne: {
     backgroundColor: "#FDECEC", 
