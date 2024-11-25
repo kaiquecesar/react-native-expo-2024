@@ -1,9 +1,7 @@
-//aba de menus
 import {
   Feather,
   FontAwesome,
   FontAwesome5,
-  FontAwesome6,
   Ionicons,
   MaterialCommunityIcons,
   MaterialIcons
@@ -21,47 +19,24 @@ function CustomDrawerContent(props) {
   const { user, singOut } = useAuth();
 
   return (
-    <View style={{ flex: 1 }}>
-      <View
-        style={{
-          marginTop: 30,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#f0f0f0",
-          paddingVertical: 10
-        }}
-      >
+    <View style={styles.container}>
+      <View style={styles.userInfoContainer}>
         <Image
-          source={{
-            uri: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-          }}
-          style={{ width: 100, height: 100, borderRadius: 50, margin: 10 }}
+          source={require("../../assets/img/stylessence.png")}
+          style={styles.profileImage}
         />
-        <Text
-          style={{ fontSize: 20, textAlign: "center", fontFamily: "regular" }}
-        >
-          {user?.user?.name}
-        </Text>
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <TouchableOpacity
-        onPress={() => singOut()}
-        style={{
-          height: 100,
-          justifyContent: "center",
-          alignItems: "center",
-          height: 50,
-          margin: 10,
-          backgroundColor: "#0000ff"
-        }}
-      >
-        <Text style={{ color: "white", fontFamily: "bold" }}>Deslogar</Text>
+
+      <TouchableOpacity onPress={() => singOut()} style={styles.signOutButton}>
+        <Text style={styles.signOutText}>Deslogar</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 const DrawerLayout = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -71,7 +46,7 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "Principal",
             headerTitle: "Principal",
-            drawerIcon: () => <Ionicons name="home" size={20} color="black" />
+            drawerIcon: () => <Ionicons name="home" size={24} color="black" />
           }}
         />
         <Drawer.Screen
@@ -79,10 +54,7 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "SkinCare",
             headerTitle: "SkinCare",
-            drawerIcon: () => (
-              
-              (<FontAwesome5 name="hand-sparkles" size={20} color="black" />)
-            )
+            drawerIcon: () => <FontAwesome5 name="hand-sparkles" size={24} color="black" />
           }}
         />
         <Drawer.Screen
@@ -106,9 +78,7 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "Cadastro",
             headerTitle: "Cadastro",
-            drawerIcon: () => (
-              <Ionicons name="add-circle-sharp" size={24} color="black" />
-            )
+            drawerIcon: () => <Ionicons name="add-circle-sharp" size={24} color="black" />
           }}
         />
         <Drawer.Screen
@@ -116,9 +86,7 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "Listagem",
             headerTitle: "Listagem",
-            drawerIcon: () => (
-              <Ionicons name="list" size={20} color="black" />
-            )
+            drawerIcon: () => <Ionicons name="list" size={24} color="black" />
           }}
         />
         <Drawer.Screen
@@ -126,20 +94,16 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "Pagamentos",
             headerTitle: "Pagamentos",
-            drawerIcon: () => (
-            <MaterialIcons name="payments" size={24} color="black" />            )
+            drawerIcon: () => <MaterialIcons name="payments" size={24} color="black" />
           }}
-          style={styles.nome}
         />
-
         <Drawer.Screen
           name="details"
           options={{
             drawerLabel: "Detalhes",
             headerTitle: "Detalhes",
-            drawerIcon: () => <Ionicons name="sparkles" size={20} color="black" />
+            drawerIcon: () => <Ionicons name="sparkles" size={24} color="black" />
           }}
-          style={styles.nome}
         />
       </Drawer>
     </GestureHandlerRootView>
@@ -151,8 +115,38 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
-  nome: {
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff", // Cor de fundo clara
+  },
+  userInfoContainer: {
+    marginTop: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd", // Cor clara para o limite
+  },
+  profileImage: {
+    width: 250,
+    height: 250,
+  },
+  username: {
+    fontSize: 24, // Aumentando o tamanho da fonte
+    textAlign: "center",
+    color: "#333", // Cor escura para o nome do usuário
+    fontFamily: "regular",
+  },
+  signOutButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    margin: 10,
+    backgroundColor: "#c23357", // Cor de fundo vibrante para o botão
+    borderRadius: 8,
+  },
+  signOutText: {
+    color: "white",
     fontFamily: "bold",
-    fontSize: 30
-  }
-})
+    fontSize: 18, // Aumentando o tamanho da fonte
+  },
+});
