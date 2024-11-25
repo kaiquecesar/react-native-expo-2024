@@ -206,49 +206,67 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10
+    padding: 15,
+    backgroundColor: "#f5f5f5",
   },
-
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 20,
+  },
   inputView: {
-    borderColor: "black",
-    borderWidth: 2,
-    width: "100%",
-    margin: 10,
+    flexDirection: "row",
     alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    borderRadius: 10,
-    margin: 5,
-  },
-
-  contentButtons: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 20,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    marginVertical: 8,
     width: "100%",
-    padding: 10
+    borderColor: "#ccc",
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-
   inputValor: {
     flex: 1,
     textAlign: "right",
-    padding: 10
+    padding: 10,
+    fontSize: 16,
+    color: "#555",
   },
   inputData: {
-    width: "100%",
+    fontSize: 16,
+    color: "#777",
+    paddingVertical: 10,
     textAlign: "center",
-    fontFamily: "regular",
-    fontSize: 20,
-    padding: 10,
-    color: "#999"
   },
   inputObservacao: {
-    width: "100%",
-    textAlign: "center",
-    fontFamily: "regular",
-    fontSize: 20,
+    fontSize: 16,
+    color: "#555",
     padding: 10,
-    color: "#999",
-    lineHeight: 20
-  }
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    borderColor: "#ccc",
+    borderWidth: 1,
+    textAlignVertical: "top",
+    minHeight: 80,
+    width: "100%",
+    lineHeight: 20,
+  },
+  contentButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    width: "100%",
+  },
+  button: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
 });
+

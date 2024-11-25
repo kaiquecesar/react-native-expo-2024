@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { FlashList } from "@shopify/flash-list";
 import { formatDataToBrazilian } from "../utils/formatData";
@@ -8,55 +8,39 @@ import { formatCurrencyBRL } from "../utils/formatCurrent";
 export default function List() {
   const [data, setData] = useState([]);
   const { getPayments } = usePaymentsDatabase();
-  const [page, setPage] = useState(0); //controlar qual pagina o sistema ja carregou
-  const [loading, setLoading] = useState(true); //controlar de esta carregando os dados do banco
-  const [hasMore, setHasMore] = useState(true); //constrolar se tem amis itens para carregar
+  const [page, setPage] = useState(0); // Controla qual página já carregou
+  const [loading, setLoading] = useState(true); // Controla se está carregando os dados do banco
+  const [hasMore, setHasMore] = useState(true); // Controla se há mais itens para carregar
 
   async function fetchData() {
-    if (hasMore === false) return; //se esta flag for falsa, não tem mais dado para carregar
-    console.log(page);
+    if (!hasMore) return; // Se não há mais dados, retorna
     setPage(page + 1);
-    //vai buscar no banco de dados os pagamentos
     const payments = await getPayments(page);
 
-    if (payments.lenght < 5) setHasMore(false); //se a quantidade de pagamentos for menor que 5, não tem mais dados para carregar
-
-    setData([...data, ...payments]);
+    if (payments.length < 5) setHasMore(false); // Se menos de 5, não há mais dados
+    setData((prevData) => [...prevData, ...payments]);
     setLoading(false);
   }
 
   useEffect(() => {
-    //executa a primeira vez a busca de dados
+    // Busca inicial de dados
     setPage(0);
     fetchData();
   }, []);
 
-  renderItem = (
-    { item } //estrutura da view de catalogar
-  ) => (
-    <View
-      style={{
-        flexDirection: "row",
-        margin: 5,
-        padding: 10,
-        margin: 10,
-        backgroundColor: "#fff",
-        height: 150
-      }}
-    >
-      <View style={{ flex: 1, gap: 5 }}>
-        <Text style={{ fontFamily: "bold", fontSize: 18, textTransform: "uppercase" }}>{item.nome}</Text>
-        <View style={{ flexDirection: "row", gap: 10 }}>
-          <Text style={{ fontFamily: "regular" }}>
+  const renderItem = ({ item }) => (
+    <View style={styles.card}>
+      <View style={styles.cardContent}>
+        <Text style={styles.itemName}>{item.nome}</Text>
+        <View style={styles.row}>
+          <Text style={styles.text}>
             {formatDataToBrazilian(item.data_pagamento || new Date())}
           </Text>
-          <Text>{item.numero_recibo}</Text>
+          <Text style={styles.text}>{item.numero_recibo}</Text>
         </View>
       </View>
-      <View>
-        <Text
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
+      <View style={styles.priceContainer}>
+        <Text style={styles.priceText}>
           {formatCurrencyBRL(item.valor_pago || 0)}
         </Text>
       </View>
@@ -64,9 +48,9 @@ export default function List() {
   );
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Listagem</Text>
-      <View style={{ flex: 1 }}>
+    <View style={styles.container}>
+      <Text style={styles.title}>Listagem de Pagamentos</Text>
+      <View style={styles.listContainer}>
         <FlashList
           data={data}
           renderItem={renderItem}
@@ -79,3 +63,60 @@ export default function List() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    padding: 10,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#333",
+  },
+  listContainer: {
+    flex: 1,
+  },
+  card: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    marginVertical: 5,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardContent: {
+    flex: 1,
+    gap: 8,
+  },
+  itemName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    color: "#444",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  text: {
+    fontSize: 14,
+    color: "#666",
+  },
+  priceContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  priceText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#2a9d8f",
+  },
+});
