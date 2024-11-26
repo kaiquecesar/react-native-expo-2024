@@ -25,7 +25,8 @@ const productSchema = z.object({
   pro_nome: z.string(),
   marca: z.string(),
   linkcompra: z.string(),
-  descricao: z.string()
+  descricao: z.string(),
+  imagem: z.string().optional()
 });
 
 export default function Product() {
@@ -39,9 +40,10 @@ export default function Product() {
   const valueRef = useRef();
   const { directory } = useConfig();
   const [products, setProducts] = useState({});
+  const [imagem, setImagem] = useState("");
 
   const handleSubmit = async () => {
-    const products = { pro_nome, marca, linkcompra, descricao };
+    const products = { pro_nome, marca, linkcompra, descricao, imagem };
 
     try {
       await productSchema.parseAsync(products);
@@ -59,6 +61,7 @@ export default function Product() {
       setLinkCompra("");
       setDescricao("");
       setProducts({});
+      setImagem("");
       valueRef?.current?.focus();
     } catch (error) {
       Alert.alert("Erro", `Erro ao inserir produto: ${error.message}`);
@@ -73,6 +76,7 @@ export default function Product() {
 
       setProducts({ ...products, imagem: image });
       console.log("Imagem escolhida:", image);
+      setImagem(image);
     } catch (error) {
       console.log("Erro em handlePickImage:", error);
       Alert.alert("Erro ao buscar imagem");

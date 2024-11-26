@@ -91,6 +91,8 @@ export default function App() {
           >
             <Text style={styles.linkText}>Manutenção</Text>
           </TouchableOpacity>
+
+
         </View>
 
         <StatusBar style="auto" />

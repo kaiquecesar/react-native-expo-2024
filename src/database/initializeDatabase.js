@@ -5,6 +5,8 @@ export async function initializeDatabase(database) {
             
             DROP TABLE IF EXISTS users;
 
+            DROP TABE IF EXISTS products;
+
             DROP INDEX IF EXISTS idx_users_nome;
 
             DROP INDEX IF EXISTS idx_payments_data_pagamento; */
@@ -40,20 +42,17 @@ export async function initializeDatabase(database) {
               marca TEXT,
               descricao TEXT,
               linkcompra TEXT,
+              imagem TEXT,
               role
               created_at DATE DEFAULT CURRENT_TIMESTAMP, 
               updated_at DATE
             );
 
-
             CREATE INDEX IF NOT EXISTS idx_users_nome ON users (nome);
-
             CREATE INDEX IF NOT EXISTS idx_payments_data_pagamento ON payments (data_pagamento);
-
-
-             INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Super', 'super@gmail.com', 'super!', 'SUPER');
+            /* INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Super', 'super@gmail.com', 'super!', 'SUPER');
             INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('Admin', 'admin@gmail.com', 'admin!', 'ADMIN');
-            INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('User', 'user@gmail.com', 'user!', 'USER'); 
+            INSERT OR REPLACE INTO users (nome, email, senha, role) VALUES ('User', 'user@gmail.com', 'user!', 'USER');  */
             `);
   } catch (error) {
     console.log(error);

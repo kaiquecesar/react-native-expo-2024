@@ -8,7 +8,7 @@ import { useConfig } from "../../hooks/Config";
 
 export default function List() {
   const [data, setData] = useState([]);
-  const { getPayments } = usePaymentsDatabase();
+  // const { getPayments } = usePaymentsDatabase();
   const { getProducts } = useProductsDatabase();
   const [page, setPage] = useState(0); //controlar qual pagina o sistema já carregou
   const [loading, setLoading] = useState(true); //controlar se está carregando os dados do banco
@@ -37,7 +37,7 @@ export default function List() {
   const renderItem = ({ item }) => (
     <View style={styles.productContainer}>
       <Text style={styles.productName}>{item.pro_nome}</Text>
-      
+
       <View style={styles.productImageContainer}>
         {item.imagem ? (
           <Image
@@ -59,7 +59,9 @@ export default function List() {
 
   return (
     <ScrollView>
-      <Banner1 />
+      <View style={styles.backbanner}>
+        <Banner1 />
+      </View>
       <View style={styles.container}>
         <Text style={styles.header}>Listagem de Produtos</Text>
         <FlashList
@@ -81,15 +83,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#f7f7f7",
+    padding: 15
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 20,
+    marginVertical: 20
   },
   productContainer: {
-    flexDirection: "column", // Produtos em coluna
+    flexDirection: "column",
     marginBottom: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -100,6 +103,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     marginRight: 10,
     width: 170,
+    padding: 5
   },
   productName: {
     fontSize: 18,
@@ -107,46 +111,53 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 10,
     paddingTop: 10,
-    paddingLeft: 10,
+    paddingLeft: 10
   },
   productImageContainer: {
     width: "100%",
-    height: 120,
+    aspectRatio: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ddd",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    overflow: "hidden"
   },
   productImage: {
-    width: "100%",
+    width: "95%",
     height: "100%",
-    resizeMode: "contain",
+    resizeMode: "cover"
   },
   noImageText: {
     fontSize: 14,
     color: "#666",
-    textAlign: "center",
+    textAlign: "center"
   },
   productDetails: {
     padding: 10,
-    justifyContent: "center",
+    justifyContent: "center"
   },
   productBrand: {
     fontSize: 16,
     color: "#666",
-    marginBottom: 5,
+    marginBottom: 5
   },
   productLink: {
     fontSize: 14,
     color: "#0066cc",
-    marginBottom: 5,
+    marginBottom: 5
   },
   productDescription: {
     fontSize: 14,
     color: "#333",
     marginTop: 5,
-    height: 60, // Altura fixa para a descrição
-    overflow: "hidden", // Garante que o texto que exceder o limite não ultrapasse a área
+    height: 60,
+    overflow: "hidden"
+  },
+  backbanner: {
+    backgroundColor: "#DCDCDC",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    height: 305,
   },
 });

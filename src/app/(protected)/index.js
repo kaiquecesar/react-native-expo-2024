@@ -1,91 +1,85 @@
-import { View, Image, StyleSheet, TouchableOpacity, Text, ImageBackground } from "react-native";
+import { View, ImageBackground, StyleSheet, TouchableOpacity, Text } from "react-native";
 import {
-  Feather,
-  FontAwesome,
-  FontAwesome5,
   FontAwesome6,
-  Ionicons,
   MaterialCommunityIcons,
-  MaterialIcons
+  Ionicons,
 } from "@expo/vector-icons";
-import { Banner } from "../../components/Banner";
 import { Banner2 } from "../../components/Banner/banner2";
+import { router } from "expo-router";
 
 export default function Home() {
   return (
-    <ImageBackground 
+    <ImageBackground
       source={require("../../assets/img/principal.png")}
-      style={{ flex: 1 }}
+      style={styles.background}
     >
-      <View style={{backgroundColor: "#c23357"}}>
-      <Banner2 />
       <View style={styles.container}>
+        {/* Banner centralizado */}
+        <View style={styles.banner}>
+          <Banner2 />
+        </View>
+
+        {/* Botões logo abaixo */}
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.roundButton}>
-          <FontAwesome6 name="spray-can-sparkles" size={24} color="black" />
-            <Text style={styles.buttonText}>SkinCare</Text>
+          <TouchableOpacity style={styles.roundButton} onPress={() => router.push("skincare")}>
+            <FontAwesome6 name="spray-can-sparkles" size={35} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.roundButton}>
-          <MaterialCommunityIcons name="face-woman-shimmer" size={24} color="black" />
-            <Text style={styles.buttonText}>Cabelo</Text>
+          <TouchableOpacity style={styles.roundButton} onPress={() => router.push("cabelo")}>
+            <MaterialCommunityIcons name="face-woman-shimmer" size={35} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.roundButton}>
-          <Ionicons name="pricetags" size={24} color="black" />
-            <Text style={styles.buttonText}>Produtos</Text>
+          <TouchableOpacity style={styles.roundButton} onPress={() => router.push("produtos")}>
+            <Ionicons name="pricetags" size={35} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.roundButton}>
-          <Ionicons name="add-circle-sharp" size={24} color="black" />
-            <Text style={styles.buttonText}>Cadastro</Text>
+          <TouchableOpacity style={styles.roundButton} onPress={() => router.push("cadastro")}>
+            <Ionicons name="add-circle-sharp" size={35} color="black" />
           </TouchableOpacity>
         </View>
       </View>
-    </View>
     </ImageBackground>
-    
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#c23357",
-    padding: 10,
+  background: {
     flex: 1,
-    alignItems: "center" // Centraliza horizontalmente
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
   },
-  headerImg: {
+  container: {
+    flex: 1,
+    //justifyContent: "center", // Centraliza o conteúdo verticalmente
+    alignItems: "center", // Centraliza o conteúdo horizontalmente
     width: "100%",
-    height: 250,
-    resizeMode: "contain",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowOpacity: 0.3,
-    elevation: 8
+    marginTop: 200
+  },
+  banner: {
+    marginBottom: 50, // Espaço entre o banner e os botões
+    width: "100%", // O banner ocupará 100% da largura disponível
+    //backgroundColor: "black"
   },
   buttonRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
+    justifyContent: "space-around",
     width: "100%",
-    paddingHorizontal: 20
+    marginTop: 250,
   },
   roundButton: {
     width: 70,
     height: 70,
-    backgroundColor: "#fff", 
-    borderRadius: 40, 
+    backgroundColor: "#fff",
+    borderRadius: 35,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    elevation: 4
+    elevation: 4,
   },
   buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold"
-  }
+    color: "#000",
+    fontSize: 12,
+    textAlign: "center",
+    marginTop: 5,
+  },
 });

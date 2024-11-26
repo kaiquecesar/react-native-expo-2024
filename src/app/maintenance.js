@@ -6,9 +6,7 @@ export default function Maintenance() {
   const { resetDatabase } = useMaintenanceDatabase();
 
   const handleReset = async () => {
-    //reset database
     try {
-      //fazer a chamada da função
       await resetDatabase();
       Alert.alert("Payments", "Banco de dados resetado com sucesso");
     } catch (error) {
@@ -22,20 +20,25 @@ export default function Maintenance() {
   return (
     <View style={styles.container}>
       <Text style={styles.windowTitle}>Manutenção do Banco</Text>
-      <TouchableOpacity onPress={() => router.push("signIn")}>
-        <Text>login</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => router.push("signIn")}>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(handleReset)}>
-        <Text>zerar</Text>
+
+      <TouchableOpacity style={styles.button} onPress={handleReset}>
+        <Text style={styles.buttonText}>Zerar Banco</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router()}>
-        <Text>importar usuários</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => router()}>
+        <Text style={styles.buttonText}>Importar Usuários</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router()}>
-        <Text>importar pagamentos</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => router()}>
+        <Text style={styles.buttonText}>Importar Pagamentos</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.back()}>
-        <Text>voltar</Text>
+
+      <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => router.back()}>
+        <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -44,11 +47,32 @@ export default function Maintenance() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingHorizontal: 20,
   },
   windowTitle: {
-    fontSize: 20,
-    fontWeight: "bold"
-  }
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 30,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#6200ee",
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginVertical: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  backButton: {
+    backgroundColor: "#888",
+  },
 });

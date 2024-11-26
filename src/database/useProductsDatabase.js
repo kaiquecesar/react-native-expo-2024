@@ -16,18 +16,20 @@ export function useProductsDatabase() {
     pro_nome,
     marca,
     descricao,
-    linkcompra
+    linkcompra,
+    imagem
   }) {
     console.log({
       pro_nome,
       marca,
       descricao,
-      linkcompra
+      linkcompra,
+      imagem
     });
 
     const statement = await database.prepareAsync(`
-                INSERT INTO products (pro_nome, marca, descricao, linkcompra) 
-                VALUES ($pro_nome, $marca, $descricao, $linkcompra)
+                INSERT INTO products (pro_nome, marca, descricao, linkcompra, imagem) 
+                VALUES ($pro_nome, $marca, $descricao, $linkcompra, $imagem)
                 `);
 
     try {
@@ -35,7 +37,8 @@ export function useProductsDatabase() {
         $pro_nome: pro_nome,
         $marca: marca,
         $descricao: descricao,
-        $linkcompra: linkcompra
+        $linkcompra: linkcompra,
+        $imagem: imagem
       });
 
       const insertedID = result.lastInsertRowId.toString();

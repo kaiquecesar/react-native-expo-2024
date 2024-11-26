@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import PagerView from "react-native-pager-view";
 
 export function Banner2() {
@@ -10,7 +10,6 @@ export function Banner2() {
     };
 
     return (
-        //<ImageBackground source={require("../../assets/img/signin3.png")} style={{flex: 1}}>
         <View style={styles.container}>
             <View style={styles.backbanner}></View>
             <PagerView initialPage={0} style={styles.content} onPageSelected={onPageSelected}>
@@ -26,7 +25,6 @@ export function Banner2() {
                 <View style={[styles.bullet, page === 1 && styles.activeBullet]}></View>
             </View>
         </View>
-        //</ImageBackground>
     );
 }
 
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
         height: 230,
         width: "98%",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     page: {
         justifyContent: "center",
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 5,
         elevation: 5,
-        overflow: "hidden",
+        overflow: "hidden"
     },
     image: {
         width: "100%",
@@ -63,27 +61,27 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 10,
+        marginTop: 20,
     },
     bullet: {
         width: 12,
         height: 12,
         borderRadius: 6,
-        backgroundColor: "#999",
+        backgroundColor: "#dfdfdf",
         margin: 5,
-        transition: "background-color 0.3s",
     },
     activeBullet: {
-        backgroundColor: "#000",
+        backgroundColor: "#2d2a2a",
+        width: 13,
+        height: 13,
     },
     backbanner: {
         position: "absolute",
-        top: 0,
-        left: 0,
+        marginTop: 15,
         width: "100%",
-        height: 300,
-        backgroundColor: "#1e5796",
-        borderBottomRightRadius: 20,
-        borderBottomLeftRadius: 20,
-    }
+        height: 240,
+        borderWidth: 5, // Define a borda
+        borderColor: "#c23357", // Cor da borda
+        borderRadius: 20, // Bordas arredondadas
+    },
 });

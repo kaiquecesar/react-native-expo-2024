@@ -11,6 +11,7 @@ export function useMaintenanceDatabase() {
           await database.execAsync(`DROP INDEX IF EXISTS idx_users_nome;`);
           await database.execAsync(`DROP TABLE IF EXISTS payments;`);
           await database.execAsync(`DROP TABLE IF EXISTS users;`);
+          await database.execAsync(`DROP TABLE IF EXISTS products;`);
           await database.execAsync(`
             CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -38,6 +39,20 @@ export function useMaintenanceDatabase() {
             FOREIGN KEY(user_cadastro) REFERENCES users(id)
             );
         `);
+
+        await database.execAsync(`
+           CREATE TABLE IF NOT EXISTS products (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              pro_nome TEXT,
+              marca TEXT,
+              descricao TEXT,
+              linkcompra TEXT,
+              imagem TEXT,
+              role
+              created_at DATE DEFAULT CURRENT_TIMESTAMP, 
+              updated_at DATE
+            );
+          `);
         
         //para toda pesquisa /ordenação no banco que não seja chave primeira, vc deve criar indices
           database.execAsync(`CREATE INDEX IF NOT EXISTS idx_users_nome ON users (nome);`);
