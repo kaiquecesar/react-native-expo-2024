@@ -2,6 +2,7 @@ import {
   Feather,
   FontAwesome,
   FontAwesome5,
+  FontAwesome6,
   Ionicons,
   MaterialCommunityIcons,
   MaterialIcons
@@ -54,7 +55,7 @@ const DrawerLayout = () => {
           options={{
             drawerLabel: "SkinCare",
             headerTitle: "SkinCare",
-            drawerIcon: () => <FontAwesome5 name="hand-sparkles" size={24} color="black" />
+            drawerIcon: () => <FontAwesome6 name="spray-can-sparkles" size={24} color="black" />
           }}
         />
         <Drawer.Screen

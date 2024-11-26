@@ -59,8 +59,8 @@ export default function List() {
 
   return (
     <ScrollView>
+      <Banner />
       <View style={styles.container}>
-        <Banner />
         <Text style={styles.header}>Listagem de Produtos</Text>
         <FlashList
           data={data}
