@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import PagerView from "react-native-pager-view";
 
-export function Banner() {
+export function Banner1() {
     const [page, setPage] = useState(0);
 
     const onPageSelected = (e) => {

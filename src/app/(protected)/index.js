@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity, Text, ImageBackground } from "react-native";
 import {
   Feather,
   FontAwesome,
@@ -9,14 +9,16 @@ import {
   MaterialIcons
 } from "@expo/vector-icons";
 import { Banner } from "../../components/Banner";
+import { Banner2 } from "../../components/Banner/banner2";
 
 export default function Home() {
   return (
-    <View style={{backgroundColor: "#c23357"}}>
-      <Image
-        source={require("../../assets/img/welcome.png")}
-        style={styles.headerImg}
-      />
+    <ImageBackground 
+      source={require("../../assets/img/principal.png")}
+      style={{ flex: 1 }}
+    >
+      <View style={{backgroundColor: "#c23357"}}>
+      <Banner2 />
       <View style={styles.container}>
         <View style={styles.buttonRow}>
           <TouchableOpacity style={styles.roundButton}>
@@ -38,6 +40,8 @@ export default function Home() {
         </View>
       </View>
     </View>
+    </ImageBackground>
+    
   );
 }
 

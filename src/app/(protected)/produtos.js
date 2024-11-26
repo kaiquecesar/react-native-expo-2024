@@ -3,7 +3,7 @@ import { Alert, Image, Text, View, StyleSheet, ScrollView } from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { useProductsDatabase } from "../../database/useProductsDatabase";
 import { FlashList } from "@shopify/flash-list";
-import { Banner } from "../../components/Banner";
+import { Banner1 } from "../../components/Banner/banner1";
 import { useConfig } from "../../hooks/Config";
 
 export default function List() {
@@ -59,7 +59,7 @@ export default function List() {
 
   return (
     <ScrollView>
-      <Banner />
+      <Banner1 />
       <View style={styles.container}>
         <Text style={styles.header}>Listagem de Produtos</Text>
         <FlashList
