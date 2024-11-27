@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Alert, Image, Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { usePaymentsDatabase } from "../../database/usePaymentsDatabase";
 import { useProductsDatabase } from "../../database/useProductsDatabase";
 import { FlashList } from "@shopify/flash-list";
@@ -60,19 +66,19 @@ export default function List() {
   return (
     <ScrollView>
       <View style={styles.backbanner}>
-        <Banner1 />
+        <Banner1/>
       </View>
       <View style={styles.container}>
         <Text style={styles.header}>Listagem de Produtos</Text>
-        <FlashList
-          data={data}
-          renderItem={renderItem}
-          estimatedItemSize={150}
-          onEndReached={fetchData}
-          onEndReachedThreshold={0.8}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2} // Exibe dois itens por linha
-        />
+          <FlashList
+            data={data}
+            renderItem={renderItem}
+            estimatedItemSize={150}
+            onEndReached={fetchData}
+            onEndReachedThreshold={0.8}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={2} // Exibe dois itens por linha
+          />
       </View>
     </ScrollView>
   );
@@ -155,9 +161,9 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   backbanner: {
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "#F5F5F5	",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    height: 305,
-  },
+    height: 305
+  }
 });

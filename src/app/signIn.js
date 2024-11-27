@@ -78,12 +78,13 @@ export default function App() {
         </TouchableOpacity>
 
         <View style={{ flexDirection: "row", marginHorizontal: "10", padding: "10" }}>
+          {/* Cabelos Lisos 
           <TouchableOpacity
             style={styles.linkText}
             onPress={() => router.push("/about")}
           >
             <Text style={styles.linkText}>Sobre</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
 
           <TouchableOpacity
             style={styles.linkText}
